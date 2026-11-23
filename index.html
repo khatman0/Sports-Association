@@ -1,0 +1,2697 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>انجمن ورزشی دانشگاه نیشابور | پرتال رسمی</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Vazirmatn & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#0F172A',
+                            turquoise: '#0D9488',
+                            cyan: '#06B6D4',
+                            gold: '#F59E0B',
+                            surface: '#F8FAFC'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+            font-family: 'Vazirmatn', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #F8FAFC;
+            color: #0F172A;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* SPA View Transition */
+        .page-view {
+            animation: fadeInView 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes fadeInView {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Pattern */
+        .hero-pattern {
+            background-color: #0F172A;
+            background-image:
+                radial-gradient(at 80% 10%, rgba(13, 148, 136, 0.25) 0px, transparent 50%),
+                radial-gradient(at 10% 90%, rgba(6, 182, 212, 0.18) 0px, transparent 50%);
+        }
+
+        /* Glassmorphism Header */
+        .glass-header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        /* Drawer & Modal Animations */
+        .modal-backdrop {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+        }
+
+        #drawer-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #drawer-panel.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-teal-500 selection:text-white flex flex-col min-h-screen">
+
+    <!-- ==================== HAMBURGER DRAWER MENU ==================== -->
+    <div id="drawer-backdrop" onclick="toggleDrawer(false)" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <aside id="drawer-panel" class="fixed top-0 right-0 bottom-0 z-50 w-80 max-w-[85vw] bg-white shadow-2xl border-l border-slate-100 translate-x-full transition-transform duration-300 ease-out flex flex-col justify-between">
+        <div>
+            <!-- Drawer Top Header -->
+            <div class="p-5 bg-brand-navy text-white flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-turquoise to-brand-cyan flex items-center justify-center shadow-md">
+                        <i class="fa-solid fa-trophy text-white text-base"></i>
+                    </div>
+                    <div>
+                        <p class="font-extrabold text-sm leading-tight">انجمن ورزشی</p>
+                        <p class="text-[11px] text-teal-300 font-medium">دانشگاه نیشابور</p>
+                    </div>
+                </div>
+                <button type="button" onclick="toggleDrawer(false)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition" aria-label="بستن منو">
+                    <i class="fa-solid fa-xmark text-base"></i>
+                </button>
+            </div>
+
+            <!-- Drawer Navigation Links -->
+            <nav class="p-4 space-y-1.5" aria-label="منوی اصلی صفحات">
+                <p class="px-3 py-1 text-[11px] font-bold text-slate-400 uppercase tracking-wider">صفحات پرتال</p>
+
+                <button type="button" data-nav="home" onclick="navigateTo('home')" class="drawer-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition text-right">
+                    <i class="fa-solid fa-house w-5 text-center text-brand-turquoise"></i>
+                    <span>صفحه اصلی</span>
+                </button>
+
+                <button type="button" data-nav="about" onclick="navigateTo('about')" class="drawer-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition text-right">
+                    <i class="fa-solid fa-circle-info w-5 text-center text-brand-turquoise"></i>
+                    <span>درباره ما</span>
+                </button>
+
+                <button type="button" data-nav="university-events" onclick="navigateTo('university-events')" class="drawer-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition text-right">
+                    <i class="fa-solid fa-calendar-check w-5 text-center text-brand-turquoise"></i>
+                    <span>رویدادهای دانشگاهی</span>
+                </button>
+
+                <button type="button" data-nav="national-events" onclick="navigateTo('national-events')" class="drawer-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition text-right">
+                    <i class="fa-solid fa-medal w-5 text-center text-brand-turquoise"></i>
+                    <span>رویدادهای کشوری</span>
+                </button>
+
+                <button type="button" data-nav="gallery" onclick="navigateTo('gallery')" class="drawer-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition text-right">
+                    <i class="fa-solid fa-images w-5 text-center text-brand-turquoise"></i>
+                    <span>گالری تصاویر</span>
+                </button>
+
+                <button type="button" data-nav="contact" onclick="navigateTo('contact')" class="drawer-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition text-right">
+                    <i class="fa-solid fa-headset w-5 text-center text-brand-turquoise"></i>
+                    <span>ارتباط با ما / تیکت</span>
+                </button>
+
+                <div class="pt-2 border-t border-slate-100 mt-2">
+                    <button type="button" data-nav="admin" onclick="handleAdminNavClick()" class="drawer-nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold text-brand-navy bg-amber-50 hover:bg-amber-100/80 border border-amber-200/70 transition text-right">
+                        <span class="flex items-center gap-3">
+                            <i class="fa-solid fa-user-shield w-5 text-center text-amber-600"></i>
+                            <span>پنل مدیریت / ورود اعضا</span>
+                        </span>
+                        <span id="drawer-admin-status" class="text-[10px] px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-900">ورود</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Drawer Bottom Info -->
+        <div class="p-4 border-t border-slate-100 bg-slate-50/70">
+            <div class="flex items-center justify-between text-xs text-slate-500">
+                <span>دانشگاه نیشابور</span>
+                <span class="text-brand-turquoise font-semibold">امور تربیت‌بدنی</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==================== TOP HEADER BAR ==================== -->
+    <header class="glass-header sticky top-0 z-40 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-18 sm:h-20">
+                <!-- Right Side: Hamburger Button + Brand Logo -->
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <button type="button" onclick="toggleDrawer(true)" class="w-11 h-11 rounded-xl bg-slate-100 hover:bg-teal-50 text-brand-navy hover:text-brand-turquoise border border-slate-200/80 flex items-center justify-center transition shadow-xs" aria-label="باز کردن منوی ناوبری">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+
+                    <button type="button" onclick="navigateTo('home')" class="flex items-center gap-3 group text-right">
+                        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-navy to-brand-turquoise flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-trophy text-white text-lg"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-extrabold text-brand-navy text-base sm:text-lg leading-tight tracking-tight">انجمن ورزشی</span>
+                            <span class="text-[11px] sm:text-xs font-medium text-brand-turquoise">دانشگاه نیشابور</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Left Side: Active Page Pill & Admin Portal Button -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="hidden sm:flex items-center gap-2 bg-slate-100 border border-slate-200/70 px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700">
+                        <span class="w-2 h-2 rounded-full bg-brand-turquoise"></span>
+                        <span id="current-page-indicator">صفحه اصلی</span>
+                    </div>
+
+                    <button type="button" onclick="handleAdminNavClick()" class="bg-brand-navy hover:bg-slate-800 text-white text-xs font-bold px-3.5 sm:px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-shield text-brand-gold"></i>
+                        <span id="header-admin-btn-text">ورود اعضا / ادمین</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MAIN SPA CONTAINER ==================== -->
+    <main class="flex-grow">
+
+        <!-- ==================== PAGE 1: HOME ==================== -->
+        <div id="page-home" class="page-view">
+            <!-- Hero Section -->
+            <section class="hero-pattern relative pt-12 pb-20 sm:pt-20 sm:pb-28 overflow-hidden text-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                        <!-- Hero Text Content -->
+                        <div class="lg:col-span-7 text-center lg:text-right space-y-6">
+                            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium text-teal-200">
+                                <span class="w-2 h-2 rounded-full bg-brand-cyan animate-ping"></span>
+                                <span>پرتال رسمی ورزش‌های دانشگاهی نیشابور</span>
+                            </div>
+
+                            <h1 class="text-3xl sm:text-5xl lg:text-[3.35rem] font-black leading-[1.2] tracking-tight">
+                                پویایی، رقابت سالم و <br>
+                                <span class="text-transparent bg-clip-text bg-gradient-to-l from-brand-cyan to-teal-300">افتخارآفرینی ورزشی</span> در دانشگاه نیشابور
+                            </h1>
+
+                            <p class="text-slate-300 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
+                                انجمن علمی و ورزشی دانشگاه نیشابور با هدف ترویج نشاط، کشف استعدادهای برتر دانشجویی، برگزاری لیگ‌های درون‌دانشگاهی و اعزام تیم‌ها به مسابقات منطقه‌ای و کشوری فعالیت می‌کند.
+                            </p>
+
+                            <!-- Quick Page Navigation Buttons -->
+                            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
+                                <button type="button" onclick="navigateTo('university-events')" class="w-full sm:w-auto bg-gradient-to-l from-brand-turquoise to-teal-500 hover:from-teal-500 hover:to-brand-turquoise text-white font-bold px-7 py-3.5 rounded-2xl shadow-lg shadow-teal-900/40 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-sm">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    <span>رویدادهای دانشگاهی و ثبت‌نام</span>
+                                </button>
+                                <button type="button" onclick="navigateTo('national-events')" class="w-full sm:w-auto bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold px-7 py-3.5 rounded-2xl transition flex items-center justify-center gap-2 text-sm">
+                                    <i class="fa-solid fa-medal text-brand-gold"></i>
+                                    <span>افتخارات و رویدادهای کشوری</span>
+                                </button>
+                            </div>
+
+                            <!-- Stats Strip -->
+                            <div class="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 max-w-lg mx-auto lg:mx-0">
+                                <div>
+                                    <div class="text-2xl sm:text-3xl font-black text-white">+۲۴</div>
+                                    <div class="text-[11px] sm:text-xs text-slate-400 mt-0.5">رشته ورزشی فعال</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl sm:text-3xl font-black text-brand-cyan">+۱,۸۰۰</div>
+                                    <div class="text-[11px] sm:text-xs text-slate-400 mt-0.5">ورزشکار دانشجو</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl sm:text-3xl font-black text-brand-gold">+۳۵</div>
+                                    <div class="text-[11px] sm:text-xs text-slate-400 mt-0.5">عنوان کشوری و منطقه‌ای</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hero Visual Card -->
+                        <div class="lg:col-span-5">
+                            <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/15 bg-slate-800/70 backdrop-blur-md">
+                                <img
+                                    src="https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=900&q=80"
+                                    onerror="this.onerror=null;this.src='https://placehold.co/900x600/0F172A/5EEAD4?text=Nishapur+University+Sports';"
+                                    alt="مسابقات ورزشی دانشجویان دانشگاه نیشابور"
+                                    class="w-full h-72 sm:h-88 object-cover opacity-90">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/30 to-transparent"></div>
+                                <div class="absolute bottom-0 right-0 left-0 p-6">
+                                    <span class="inline-block bg-brand-turquoise/90 text-white text-[11px] font-bold px-3 py-1 rounded-full mb-2">فصل جدید مسابقات</span>
+                                    <h2 class="text-lg sm:text-xl font-bold text-white">لیگ جام خیام دانشگاه نیشابور</h2>
+                                    <p class="text-xs text-slate-300 mt-1">ثبت‌نام تیم‌های دانشجویی در رشته‌های فوتسال، والیبال، بسکتبال و بدمینتون آغاز شد.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Access Cards to Separate Sections -->
+            <section class="py-14 sm:py-16 bg-white border-b border-slate-100">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+                        <div>
+                            <span class="text-brand-turquoise font-bold text-xs sm:text-sm">دسترسی سریع به بخش‌ها</span>
+                            <h2 class="text-2xl sm:text-3xl font-black text-brand-navy mt-1">صفحات اختصاصی انجمن</h2>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-500">هر بخش در صفحه مستقل خود نمایش داده می‌شود تا بدون اسکرول طولانی به اطلاعات دسترسی داشته باشید.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <button type="button" onclick="navigateTo('about')" class="text-right bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-brand-turquoise rounded-2xl p-6 transition shadow-xs hover:shadow-md group">
+                            <div class="w-12 h-12 rounded-xl bg-teal-100 text-brand-turquoise flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-base mb-1">درباره انجمن</h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">آشنایی با اهداف، اساسنامه، کمیته‌ها و شورای مرکزی انجمن.</p>
+                        </button>
+
+                        <button type="button" onclick="navigateTo('university-events')" class="text-right bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-brand-turquoise rounded-2xl p-6 transition shadow-xs hover:shadow-md group">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-100 text-brand-cyan flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-base mb-1">رویدادهای دانشگاهی</h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">مشاهده تقویم مسابقات درون‌دانشگاهی، ثبت‌نام و استعلام وضعیت.</p>
+                        </button>
+
+                        <button type="button" onclick="navigateTo('national-events')" class="text-right bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-brand-turquoise rounded-2xl p-6 transition shadow-xs hover:shadow-md group">
+                            <div class="w-12 h-12 rounded-xl bg-amber-100 text-brand-gold flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-base mb-1">رویدادهای کشوری</h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">المپیادهای کشوری، مسابقات منطقه‌ای و افتخارآفرینی دانشجویان.</p>
+                        </button>
+
+                        <button type="button" onclick="navigateTo('gallery')" class="text-right bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-brand-turquoise rounded-2xl p-6 transition shadow-xs hover:shadow-md group">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl mb-4 group-hover:scale-105 transition">
+                                <i class="fa-solid fa-photo-film"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-base mb-1">گالری تصاویر</h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">مجموعه عکس‌های منتخب از رقابت‌ها، اردوهای ورزشی و مراسم‌ها.</p>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Latest Announcements Section -->
+            <section class="py-16 sm:py-20 bg-brand-surface">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                        <div>
+                            <span class="text-brand-turquoise font-bold text-xs sm:text-sm tracking-wide">اطلاعیه‌ها و اخبار رسمی</span>
+                            <h2 class="text-2xl sm:text-4xl font-black text-brand-navy mt-1">تازه‌های انجمن ورزشی</h2>
+                        </div>
+                        <button type="button" onclick="navigateTo('contact')" class="text-xs sm:text-sm font-bold text-brand-turquoise hover:text-teal-700 flex items-center gap-1.5 self-start md:self-auto">
+                            <span>ارتباط و ارسال تیکت به ادمین</span>
+                            <i class="fa-solid fa-arrow-left text-xs"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                        <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 flex flex-col">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80"
+                                     onerror="this.onerror=null;this.src='https://placehold.co/800x500/0F172A/5EEAD4?text=Futsal+Tournament';"
+                                     alt="مسابقات فوتسال" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 right-3 bg-brand-navy/85 text-white text-[11px] font-semibold px-3 py-1 rounded-full">مسابقات درون‌دانشگاهی</span>
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <div class="text-xs text-slate-400 mb-2 flex items-center gap-2">
+                                        <i class="fa-regular fa-calendar"></i>
+                                        <span>۱۸ آبان ۱۴۰۳</span>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-brand-navy mb-2 leading-snug">آغاز ثبت‌نام لیگ فوتسال و والیبال جام خیام</h3>
+                                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed line-clamp-3">
+                                        تمامی دانشکده‌ها و تیم‌های دانشجویی می‌توانند تا پایان هفته نسبت به تکمیل مدارک و ثبت‌نام در دبیرخانه انجمن اقدام نمایند.
+                                    </p>
+                                </div>
+                                <button type="button" onclick="showNewsDetails('آغاز ثبت‌نام لیگ فوتسال و والیبال جام خیام', 'مهلت ثبت‌نام تیم‌های دانشجویی در بخش آقایان و بانوان تا تاریخ ۳۰ آبان تمدید شد. ارائه کارت دانشجویی معتبر و گواهی سلامت برای تمامی بازیکنان الزامی است.')" class="mt-5 text-brand-turquoise font-bold text-xs hover:underline inline-flex items-center gap-1 self-start">
+                                    <span>مشاهده جزئیات اطلاعیه</span>
+                                    <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                                </button>
+                            </div>
+                        </article>
+
+                        <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 flex flex-col">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1526676037777-05a232554f77?auto=format&fit=crop&w=800&q=80"
+                                     onerror="this.onerror=null;this.src='https://placehold.co/800x500/0F172A/FBBF24?text=National+Championship';"
+                                     alt="کسب مقام کشوری" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 right-3 bg-brand-gold text-slate-950 text-[11px] font-bold px-3 py-1 rounded-full">افتخار کشوری</span>
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <div class="text-xs text-slate-400 mb-2 flex items-center gap-2">
+                                        <i class="fa-regular fa-calendar"></i>
+                                        <span>۱۰ آبان ۱۴۰۳</span>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-brand-navy mb-2 leading-snug">درخشش تیم دوومیدانی دانشگاه نیشابور در مسابقات منطقه‌ای</h3>
+                                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed line-clamp-3">
+                                        ورزشکاران اعزامی دانشگاه نیشابور موفق به کسب ۲ مدال طلا و ۱ نقره در رقابت‌های دوومیدانی دانشجویان شدند.
+                                    </p>
+                                </div>
+                                <button type="button" onclick="showNewsDetails('درخشش تیم دوومیدانی دانشگاه نیشابور', 'در رقابت‌های برگزارشده با حضور برترین دانشگاه‌های منطقه، تیم دانشگاه نیشابور در مواد ۱۵۰۰ متر و پرش طول موفق به ایستادن بر سکوی نخست شد.')" class="mt-5 text-brand-turquoise font-bold text-xs hover:underline inline-flex items-center gap-1 self-start">
+                                    <span>مشاهده جزئیات اطلاعیه</span>
+                                    <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                                </button>
+                            </div>
+                        </article>
+
+                        <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 flex flex-col">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80"
+                                     onerror="this.onerror=null;this.src='https://placehold.co/800x500/0F172A/38BDF8?text=Fitness+Workshop';"
+                                     alt="کارگاه آمادگی جسمانی" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 right-3 bg-brand-turquoise text-white text-[11px] font-semibold px-3 py-1 rounded-full">آموزشی و همگانی</span>
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <div class="text-xs text-slate-400 mb-2 flex items-center gap-2">
+                                        <i class="fa-regular fa-calendar"></i>
+                                        <span>۰۲ آبان ۱۴۰۳</span>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-brand-navy mb-2 leading-snug">برگزاری کارگاه تخصصی تغذیه ورزشی و پیشگیری از آسیب</h3>
+                                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed line-clamp-3">
+                                        نشست علمی با حضور متخصصین فیزیولوژی ورزش و تغذیه در سالن سمینار دانشکده علوم پایه برگزار می‌شود.
+                                    </p>
+                                </div>
+                                <button type="button" onclick="showNewsDetails('کارگاه تخصصی تغذیه ورزشی و پیشگیری از آسیب', 'شرکت در این کارگاه برای تمامی دانشجویان رایگان بوده و در پایان گواهی حضور معتبر از سوی انجمن ورزشی دانشگاه نیشابور صادر می‌گردد.')" class="mt-5 text-brand-turquoise font-bold text-xs hover:underline inline-flex items-center gap-1 self-start">
+                                    <span>مشاهده جزئیات اطلاعیه</span>
+                                    <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== PAGE 2: ABOUT ==================== -->
+        <div id="page-about" class="page-view hidden">
+            <section class="bg-brand-navy text-white py-12 sm:py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <span class="text-brand-cyan font-bold text-xs sm:text-sm">معرفی رسمی نهاد دانشجویی</span>
+                    <h1 class="text-3xl sm:text-4xl font-black mt-1">درباره انجمن ورزشی دانشگاه نیشابور</h1>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-2 max-w-2xl">
+                        پل ارتباطی میان دانشجویان ورزشکار، مدیریت تربیت‌بدنی دانشگاه و رویدادهای ورزشی منطقه‌ای و کشوری.
+                    </p>
+                </div>
+            </section>
+
+            <section class="py-14 sm:py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        <div class="lg:col-span-6 relative">
+                            <div class="rounded-3xl overflow-hidden shadow-xl">
+                                <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=900&q=80"
+                                     onerror="this.onerror=null;this.src='https://placehold.co/900x650/0F172A/5EEAD4?text=About+Sports+Association';"
+                                     alt="تیم اجرایی انجمن ورزشی" class="w-full h-80 sm:h-96 object-cover">
+                            </div>
+                            <div class="bg-brand-navy text-white p-5 rounded-2xl shadow-lg max-w-xs -mt-10 mr-4 sm:mr-6 relative z-10 border border-white/10">
+                                <p class="text-xs text-teal-300 font-semibold">چشم‌انداز ما</p>
+                                <p class="text-sm font-bold mt-1 leading-relaxed">دانشگاهی پویا، سالم و سرآمد در ورزش‌های قهرمانی و همگانی</p>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-6 space-y-5">
+                            <span class="text-brand-turquoise font-bold text-xs sm:text-sm tracking-wide">اهداف و ماموریت‌ها</span>
+                            <h2 class="text-2xl sm:text-3xl font-black text-brand-navy leading-tight">
+                                بسترسازی برای رشد استعدادهای ورزشی دانشجویان نیشابور
+                            </h2>
+                            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                                انجمن ورزشی دانشگاه نیشابور زیر نظر معاونت فرهنگی و اجتماعی و با همکاری مدیریت تربیت‌بدنی، بستر منظم و رسمی برای مشارکت دانشجویان در فعالیت‌های ورزشی، داوری، مربیگری و مدیریت رویدادها فراهم می‌کند.
+                            </p>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                                    <div class="w-9 h-9 rounded-lg bg-teal-100 text-brand-turquoise flex items-center justify-center mb-2.5">
+                                        <i class="fa-solid fa-users-gear"></i>
+                                    </div>
+                                    <h3 class="font-bold text-sm text-brand-navy mb-1">کمیته‌های تخصصی</h3>
+                                    <p class="text-xs text-slate-500 leading-relaxed">فعالیت منظم کمیته‌های مسابقات، استعدادیابی، ورزش بانوان، همگانی و روابط عمومی.</p>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                                    <div class="w-9 h-9 rounded-lg bg-cyan-100 text-brand-cyan flex items-center justify-center mb-2.5">
+                                        <i class="fa-solid fa-handshake-angle"></i>
+                                    </div>
+                                    <h3 class="font-bold text-sm text-brand-navy mb-1">همکاری بین‌دانشگاهی</h3>
+                                    <p class="text-xs text-slate-500 leading-relaxed">تعامل سازنده با هیأت‌های ورزشی شهرستان نیشابور و دانشگاه‌های استان خراسان رضوی.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== PAGE 3: UNIVERSITY EVENTS ==================== -->
+        <div id="page-university-events" class="page-view hidden">
+            <section class="bg-brand-navy text-white py-12 sm:py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <span class="text-brand-cyan font-bold text-xs sm:text-sm">تقویم اجرایی درون‌دانشگاهی</span>
+                    <h1 class="text-3xl sm:text-4xl font-black mt-1">رویدادهای ورزشی دانشگاه نیشابور</h1>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-2 max-w-2xl">
+                        مسابقات، جشنواره‌ها و همایش‌های ورزشی ویژه دانشجویان، اساتید و کارکنان دانشگاه نیشابور.
+                    </p>
+                </div>
+            </section>
+
+            <section class="py-14 sm:py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-black text-brand-navy">فهرست مسابقات و رویدادها</h2>
+                        </div>
+
+                        <!-- Filter Tabs -->
+                        <div class="flex items-center gap-2 flex-wrap" id="event-filter-tabs">
+                            <button type="button" onclick="filterEvents('all', this)" class="event-tab active bg-brand-navy text-white px-4 py-2 rounded-xl text-xs font-bold transition">همه</button>
+                            <button type="button" onclick="filterEvents('futsal', this)" class="event-tab bg-slate-100 text-slate-600 hover:bg-slate-200 px-4 py-2 rounded-xl text-xs font-bold transition">فوتسال</button>
+                            <button type="button" onclick="filterEvents('volleyball', this)" class="event-tab bg-slate-100 text-slate-600 hover:bg-slate-200 px-4 py-2 rounded-xl text-xs font-bold transition">والیبال</button>
+                            <button type="button" onclick="filterEvents('badminton', this)" class="event-tab bg-slate-100 text-slate-600 hover:bg-slate-200 px-4 py-2 rounded-xl text-xs font-bold transition">بدمینتون و تنیس</button>
+                            <button type="button" onclick="filterEvents('public', this)" class="event-tab bg-slate-100 text-slate-600 hover:bg-slate-200 px-4 py-2 rounded-xl text-xs font-bold transition">ورزش همگانی</button>
+                        </div>
+                    </div>
+
+                    <!-- Events Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="university-events-grid">
+                        <!-- Event 1 -->
+                        <div class="event-card futsal bg-slate-50 border border-slate-200/70 rounded-3xl p-6 flex flex-col justify-between hover:border-brand-turquoise/50 transition">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">فوتسال</span>
+                                    <span class="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> در حال ثبت‌نام
+                                    </span>
+                                </div>
+                                <h3 class="text-lg font-extrabold text-brand-navy mb-2">مسابقات فوتسال جام دانشجویی</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    رقابت تیم‌های منتخب دانشکده‌ها و خوابگاه‌ها به صورت حذفی و گروهی با داوری رسمی.
+                                </p>
+                            </div>
+                            <div class="space-y-2 pt-4 border-t border-slate-200/70 text-xs text-slate-500">
+                                <div class="flex items-center justify-between">
+                                    <span><i class="fa-regular fa-calendar ml-1 text-brand-turquoise"></i> زمان برگزاری:</span>
+                                    <span class="font-semibold text-slate-700">آذرماه ۱۴۰۳</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span><i class="fa-solid fa-location-dot ml-1 text-brand-turquoise"></i> محل برگزاری:</span>
+                                    <span class="font-semibold text-slate-700">سالن ورزشی دانشگاه</span>
+                                </div>
+                                <button type="button" onclick="openRegisterModal('مسابقات فوتسال جام دانشجویی')" class="mt-4 w-full bg-brand-navy hover:bg-brand-turquoise text-white font-bold py-2.5 rounded-xl transition text-xs">
+                                    ثبت‌نام در این رویداد
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Event 2 -->
+                        <div class="event-card volleyball bg-slate-50 border border-slate-200/70 rounded-3xl p-6 flex flex-col justify-between hover:border-brand-turquoise/50 transition">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full">والیبال</span>
+                                    <span class="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> در حال ثبت‌نام
+                                    </span>
+                                </div>
+                                <h3 class="text-lg font-extrabold text-brand-navy mb-2">لیگ والیبال درون‌دانشگاهی (آقایان و بانوان)</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    برگزاری مسابقات والیبال در دو بخش مجزا با هدف انتخاب تیم منتخب دانشگاه نیشابور.
+                                </p>
+                            </div>
+                            <div class="space-y-2 pt-4 border-t border-slate-200/70 text-xs text-slate-500">
+                                <div class="flex items-center justify-between">
+                                    <span><i class="fa-regular fa-calendar ml-1 text-brand-turquoise"></i> زمان برگزاری:</span>
+                                    <span class="font-semibold text-slate-700">آذر و دی ۱۴۰۳</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span><i class="fa-solid fa-location-dot ml-1 text-brand-turquoise"></i> محل برگزاری:</span>
+                                    <span class="font-semibold text-slate-700">سالن چندمنظوره پردیس</span>
+                                </div>
+                                <button type="button" onclick="openRegisterModal('لیگ والیبال درون‌دانشگاهی (آقایان و بانوان)')" class="mt-4 w-full bg-brand-navy hover:bg-brand-turquoise text-white font-bold py-2.5 rounded-xl transition text-xs">
+                                    ثبت‌نام در این رویداد
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Event 3 -->
+                        <div class="event-card badminton bg-slate-50 border border-slate-200/70 rounded-3xl p-6 flex flex-col justify-between hover:border-brand-turquoise/50 transition">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="bg-cyan-100 text-cyan-800 text-xs font-bold px-3 py-1 rounded-full">بدمینتون و تنیس</span>
+                                    <span class="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> در حال ثبت‌نام
+                                    </span>
+                                </div>
+                                <h3 class="text-lg font-extrabold text-brand-navy mb-2">رقابت‌های بدمینتون و تنیس روی میز</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    مسابقات انفرادی و دوبل ویژه دانشجویان در رده‌های مبتدی و پیشرفته با اهدای حکم قهرمانی.
+                                </p>
+                            </div>
+                            <div class="space-y-2 pt-4 border-t border-slate-200/70 text-xs text-slate-500">
+                                <div class="flex items-center justify-between">
+                                    <span><i class="fa-regular fa-calendar ml-1 text-brand-turquoise"></i> زمان برگزاری:</span>
+                                    <span class="font-semibold text-slate-700">آذرماه ۱۴۰۳</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span><i class="fa-solid fa-location-dot ml-1 text-brand-turquoise"></i> محل برگزاری:</span>
+                                    <span class="font-semibold text-slate-700">سالن تخصصی راکت</span>
+                                </div>
+                                <button type="button" onclick="openRegisterModal('رقابت‌های بدمینتون و تنیس روی میز')" class="mt-4 w-full bg-brand-navy hover:bg-brand-turquoise text-white font-bold py-2.5 rounded-xl transition text-xs">
+                                    ثبت‌نام در این رویداد
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Event 4 -->
+                        <div class="event-card public bg-slate-50 border border-slate-200/70 rounded-3xl p-6 flex flex-col justify-between hover:border-brand-turquoise/50 transition">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">ورزش همگانی</span>
+                                    <span class="text-xs font-semibold text-amber-600 flex items-center gap-1">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> به‌زودی
+                                    </span>
+                                </div>
+                                <h3 class="text-lg font-extrabold text-brand-navy mb-2">همایش پیاده‌روی و نشاط صبحگاهی</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    برنامه مفرح پیاده‌روی دسته‌جمعی، حرکات اصلاحی و قرعه‌کشی جوایز ورزشی ویژه خانواده بزرگ دانشگاه.
+                                </p>
+                            </div>
+                            <div class="space-y-2 pt-4 border-t border-slate-200/70 text-xs text-slate-500">
+                                <div class="flex items-center justify-between">
+                                    <span><i class="fa-regular fa-calendar ml-1 text-brand-turquoise"></i> زمان برگزاری:</span>
+                                    <span class="font-semibold text-slate-700">جمعه، ۱۵ آذر ۱۴۰۳</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span><i class="fa-solid fa-location-dot ml-1 text-brand-turquoise"></i> محل برگزاری:</span>
+                                    <span class="font-semibold text-slate-700">محوطه پردیس دانشگاه</span>
+                                </div>
+                                <button type="button" onclick="openRegisterModal('همایش پیاده‌روی و نشاط صبحگاهی')" class="mt-4 w-full bg-brand-navy hover:bg-brand-turquoise text-white font-bold py-2.5 rounded-xl transition text-xs">
+                                    ثبت‌نام در این رویداد
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Student Registrations List Box -->
+                    <div id="my-event-registrations-box" class="mt-12 bg-slate-50 rounded-3xl p-6 border border-slate-200">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-clipboard-check text-brand-turquoise"></i>
+                                    <span>استعلام و وضعیت ثبت‌نام مسابقات (دانشگاهی و کشوری)</span>
+                                </h3>
+                                <p class="text-[11px] text-slate-500 mt-0.5">کد دانشجویی خود را وارد کنید تا ببینید ثبت‌نام شما توسط مسئول یا دبیر تایید شده است یا خیر.</p>
+                            </div>
+                            <span id="event-reg-count-badge" class="text-xs bg-teal-100 text-teal-900 font-bold px-3 py-1 rounded-full self-start sm:self-center">۰ مورد</span>
+                        </div>
+
+                        <!-- Student ID Lookup Bar -->
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 mb-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                            <div class="relative flex-grow">
+                                <input type="number" id="lookup-reg-student-id" placeholder="کد دانشجویی خود را برای استعلام وضعیت وارد کنید..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-900 focus:outline-none focus:border-brand-turquoise">
+                            </div>
+                            <button type="button" onclick="handleLookupEventRegistration()" class="bg-brand-navy hover:bg-slate-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <span>بررسی وضعیت</span>
+                            </button>
+                            <button type="button" onclick="resetEventRegistrationLookup()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold transition">
+                                نمایش همه ثبت‌نام‌ها
+                            </button>
+                        </div>
+
+                        <div id="event-registrations-list" class="space-y-2.5 text-xs text-slate-600">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== PAGE 4: NATIONAL EVENTS ==================== -->
+        <div id="page-national-events" class="page-view hidden">
+            <section class="bg-slate-900 text-white py-14 sm:py-20 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-bl from-brand-turquoise/20 via-transparent to-brand-gold/10 pointer-events-none"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+                        <div>
+                            <span class="inline-flex items-center gap-1.5 bg-brand-gold/20 text-brand-gold border border-brand-gold/30 text-xs font-bold px-3.5 py-1 rounded-full mb-3">
+                                <i class="fa-solid fa-award"></i> حضور در سطح ملی و منطقه‌ای
+                            </span>
+                            <h1 class="text-3xl sm:text-4xl font-black">رویدادهای کشوری و افتخارات ورزشی</h1>
+                            <p class="text-slate-300 text-xs sm:text-sm mt-2 max-w-2xl leading-relaxed">
+                                نمایندگان دانشگاه نیشابور در المپیادهای ورزشی دانشجویان، مسابقات منطقه‌ای وزارت علوم و رویدادهای معتبر کشوری حضور فعال و افتخارآفرین دارند.
+                            </p>
+                        </div>
+
+                        <!-- National Events Filter -->
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <button type="button" onclick="filterNationalEvents('all', this)" data-nat-filter="all" class="nat-filter-btn bg-brand-turquoise text-white px-3.5 py-2 rounded-xl text-xs font-bold transition">همه رویدادها</button>
+                            <button type="button" onclick="filterNationalEvents('medals', this)" data-nat-filter="medals" class="nat-filter-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold transition">افتخارات و مدال‌ها</button>
+                            <button type="button" onclick="filterNationalEvents('upcoming', this)" data-nat-filter="upcoming" class="nat-filter-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold transition">اعزام‌های پیش‌رو</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="national-events-grid">
+                        <!-- National Card 1 -->
+                        <div class="national-card upcoming bg-slate-800/90 rounded-2xl p-6 border border-slate-700 hover:border-brand-turquoise transition flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-teal-500/20 text-brand-cyan flex items-center justify-center text-xl mb-4">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </div>
+                                <span class="text-xs text-brand-cyan font-semibold">اعزام پیش‌رو</span>
+                                <h3 class="text-xl font-bold text-white mt-1 mb-3">مسابقات منطقه ۹ ورزش دانشگاه‌ها</h3>
+                                <p class="text-slate-300 text-xs leading-relaxed mb-4">
+                                    اعزام تیم‌های کشتی، فوتسال و شنا دانشگاه نیشابور به رقابت‌های سهمیه المپیاد کشوری.
+                                </p>
+                            </div>
+                            <div>
+                                <div class="pt-4 border-t border-slate-700 flex items-center justify-between text-xs text-slate-400 mb-4">
+                                    <span><i class="fa-solid fa-location-dot ml-1"></i> مشهد مقدس</span>
+                                    <span>دی‌ماه ۱۴۰۳</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button type="button" onclick="showNewsDetails('مسابقات منطقه ۹ ورزش دانشگاه‌ها', 'اردوهای آماده‌سازی تیم‌های اعزامی دانشگاه نیشابور در سالن ولایت در حال برگزاری است و لیست نهایی نفرات تا پایان آذر اعلام خواهد شد.')" class="w-1/2 py-2.5 rounded-xl bg-slate-700/80 hover:bg-slate-600 text-white text-xs font-bold transition">
+                                        جزئیات رویداد
+                                    </button>
+                                    <button type="button" onclick="openRegisterModal('رویداد کشوری: مسابقات منطقه ۹ ورزش دانشگاه‌ها')" class="w-1/2 py-2.5 rounded-xl bg-brand-turquoise hover:bg-teal-600 text-white text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                        <span>درخواست اعزام</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- National Card 2 -->
+                        <div class="national-card medals bg-slate-800/90 rounded-2xl p-6 border border-slate-700 hover:border-brand-gold transition flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-brand-gold flex items-center justify-center text-xl mb-4">
+                                    <i class="fa-solid fa-medal"></i>
+                                </div>
+                                <span class="text-xs text-brand-gold font-semibold">کسب مقام کشوری</span>
+                                <h3 class="text-xl font-bold text-white mt-1 mb-3">المپیاد ورزشی دانشجویان کشور</h3>
+                                <p class="text-slate-300 text-xs leading-relaxed mb-4">
+                                    کسب مدال طلای تکواندو و برنز شطرنج سریع توسط نمایندگان دانشگاه نیشابور در رقابت‌های کشوری.
+                                </p>
+                            </div>
+                            <div>
+                                <div class="pt-4 border-t border-slate-700 flex items-center justify-between text-xs text-slate-400 mb-4">
+                                    <span><i class="fa-solid fa-location-dot ml-1"></i> سطح کشوری</span>
+                                    <span>دوره گذشته</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button type="button" onclick="showNewsDetails('المپیاد ورزشی دانشجویان کشور', 'نمایندگان دانشگاه نیشابور با آمادگی فنی بالا در این دوره حضور یافتند و موفق به کسب نشان طلای تکواندو و برنز شطرنج شدند.')" class="w-1/2 py-2.5 rounded-xl bg-slate-700/80 hover:bg-slate-600 text-white text-xs font-bold transition">
+                                        جزئیات رویداد
+                                    </button>
+                                    <button type="button" onclick="openRegisterModal('رویداد کشوری: المپیاد ورزشی دانشجویان کشور')" class="w-1/2 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                        <span>ثبت درخواست</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- National Card 3 -->
+                        <div class="national-card medals bg-slate-800/90 rounded-2xl p-6 border border-slate-700 hover:border-brand-turquoise transition flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-brand-cyan flex items-center justify-center text-xl mb-4">
+                                    <i class="fa-solid fa-trophy"></i>
+                                </div>
+                                <span class="text-xs text-brand-cyan font-semibold">مسابقات قهرمانی</span>
+                                <h3 class="text-xl font-bold text-white mt-1 mb-3">قهرمانی بدمینتون و دوومیدانی دانشگاه‌ها</h3>
+                                <p class="text-slate-300 text-xs leading-relaxed mb-4">
+                                    حضور موفق دانشجویان ورزشکار در مسابقات کشوری و کسب تجربه ارزشمند در سطح ملی.
+                                </p>
+                            </div>
+                            <div>
+                                <div class="pt-4 border-t border-slate-700 flex items-center justify-between text-xs text-slate-400 mb-4">
+                                    <span><i class="fa-solid fa-location-dot ml-1"></i> میزبانی کشوری</span>
+                                    <span>سال تحصیلی جاری</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button type="button" onclick="showNewsDetails('قهرمانی بدمینتون و دوومیدانی دانشگاه‌ها', 'تیم‌های بدمینتون و دوومیدانی دانشگاه نیشابور پس از گذراندن اردوهای انتخابی، عازم رقابت‌های کشوری شدند.')" class="w-1/2 py-2.5 rounded-xl bg-slate-700/80 hover:bg-slate-600 text-white text-xs font-bold transition">
+                                        جزئیات رویداد
+                                    </button>
+                                    <button type="button" onclick="openRegisterModal('رویداد کشوری: قهرمانی بدمینتون و دوومیدانی دانشگاه‌ها')" class="w-1/2 py-2.5 rounded-xl bg-brand-turquoise hover:bg-teal-600 text-white text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                        <span>ثبت درخواست</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== PAGE 5: GALLERY ==================== -->
+        <div id="page-gallery" class="page-view hidden">
+            <section class="bg-brand-navy text-white py-12 sm:py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <span class="text-brand-cyan font-bold text-xs sm:text-sm">آرشیو تصویری فعالیت‌ها</span>
+                    <h1 class="text-3xl sm:text-4xl font-black mt-1">گالری تصاویر انجمن ورزشی</h1>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-2 max-w-2xl">
+                        لحظات ماندگار از مسابقات درون‌دانشگاهی، اردوهای آماده سازی و افتخارآفرینی‌های کشوری.
+                    </p>
+                </div>
+            </section>
+
+            <section class="py-14 sm:py-20 bg-brand-surface">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-10 gap-4">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-black text-brand-navy">تصاویر منتخب</h2>
+                        </div>
+
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <button type="button" onclick="filterGallery('all', this)" class="gallery-filter active bg-brand-turquoise text-white px-4 py-1.5 rounded-full text-xs font-bold transition">همه تصاویر</button>
+                            <button type="button" onclick="filterGallery('matches', this)" class="gallery-filter bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 px-4 py-1.5 rounded-full text-xs font-bold transition">مسابقات</button>
+                            <button type="button" onclick="filterGallery('camps', this)" class="gallery-filter bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 px-4 py-1.5 rounded-full text-xs font-bold transition">اردوها و تمرینات</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="gallery-grid">
+                        <div onclick="openLightbox('https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=1200&q=85', 'فینال مسابقات بسکتبال دانشجویان دانشگاه نیشابور')" class="gallery-item matches group relative h-64 rounded-2xl overflow-hidden cursor-pointer shadow-sm bg-slate-200">
+                            <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80" onerror="this.onerror=null;this.src='https://placehold.co/800x600/0F172A/5EEAD4?text=Basketball+Final';" alt="مسابقات بسکتبال" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-85 group-hover:opacity-100 transition flex items-end p-5">
+                                <p class="text-white text-xs sm:text-sm font-bold">فینال مسابقات بسکتبال دانشجویان</p>
+                            </div>
+                        </div>
+
+                        <div onclick="openLightbox('https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=85', 'دیدار پرهیجان لیگ فوتسال درون‌دانشگاهی')" class="gallery-item matches group relative h-64 rounded-2xl overflow-hidden cursor-pointer shadow-sm bg-slate-200">
+                            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80" onerror="this.onerror=null;this.src='https://placehold.co/800x600/0F172A/5EEAD4?text=Futsal+Match';" alt="مسابقات فوتسال" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-85 group-hover:opacity-100 transition flex items-end p-5">
+                                <p class="text-white text-xs sm:text-sm font-bold">دیدار پرهیجان لیگ فوتسال درون‌دانشگاهی</p>
+                            </div>
+                        </div>
+
+                        <div onclick="openLightbox('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=85', 'تمرینات آمادگی جسمانی و بدنسازی تیم‌ها')" class="gallery-item camps group relative h-64 rounded-2xl overflow-hidden cursor-pointer shadow-sm bg-slate-200">
+                            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80" onerror="this.onerror=null;this.src='https://placehold.co/800x600/0F172A/38BDF8?text=Training+Camp';" alt="تمرینات آمادگی جسمانی" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-85 group-hover:opacity-100 transition flex items-end p-5">
+                                <p class="text-white text-xs sm:text-sm font-bold">تمرینات آمادگی جسمانی و بدنسازی</p>
+                            </div>
+                        </div>
+
+                        <div onclick="openLightbox('https://images.unsplash.com/photo-1526676037777-05a232554f77?auto=format&fit=crop&w=1200&q=80', 'رقابت‌های دوومیدانی و استقامت')" class="gallery-item matches group relative h-64 rounded-2xl overflow-hidden cursor-pointer shadow-sm bg-slate-200">
+                            <img src="https://images.unsplash.com/photo-1526676037777-05a232554f77?auto=format&fit=crop&w=800&q=80" onerror="this.onerror=null;this.src='https://placehold.co/800x600/0F172A/FBBF24?text=Athletics+Track';" alt="دوومیدانی" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-85 group-hover:opacity-100 transition flex items-end p-5">
+                                <p class="text-white text-xs sm:text-sm font-bold">رقابت‌های دوومیدانی و استقامت</p>
+                            </div>
+                        </div>
+
+                        <div onclick="openLightbox('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1200&q=80', 'اردوی تمرینی و کارگروه‌های ورزشی')" class="gallery-item camps group relative h-64 rounded-2xl overflow-hidden cursor-pointer shadow-sm bg-slate-200">
+                            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80" onerror="this.onerror=null;this.src='https://placehold.co/800x600/0F172A/5EEAD4?text=Sports+Workshop';" alt="اردوی ورزشی" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-85 group-hover:opacity-100 transition flex items-end p-5">
+                                <p class="text-white text-xs sm:text-sm font-bold">اردوی تمرینی و کارگروه‌های ورزشی</p>
+                            </div>
+                        </div>
+
+                        <div onclick="openLightbox('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1200&q=80', 'افتخارآفرینی و حضور در میادین ورزشی')" class="gallery-item camps group relative h-64 rounded-2xl overflow-hidden cursor-pointer shadow-sm bg-slate-200">
+                            <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=800&q=80" onerror="this.onerror=null;this.src='https://placehold.co/800x600/0F172A/38BDF8?text=Team+Spirit';" alt="روحیه تیمی" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-85 group-hover:opacity-100 transition flex items-end p-5">
+                                <p class="text-white text-xs sm:text-sm font-bold">همدلی و نشاط در تمرینات تیمی</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== PAGE 6: CONTACT & ADMIN TICKETS ==================== -->
+        <div id="page-contact" class="page-view hidden">
+            <section class="bg-brand-navy text-white py-12 sm:py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <span class="text-brand-cyan font-bold text-xs sm:text-sm">پشتیبانی، تیکت و اطلاعات تماس</span>
+                    <h1 class="text-3xl sm:text-4xl font-black mt-1">ارتباط با انجمن و ادمین</h1>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-2 max-w-2xl">
+                        پیام و تیکت شما مستقیماً به مسئول مربوطه همان موضوع ارجاع می‌شود و می‌توانید با کد رهگیری یا کد دانشجویی پاسخ‌ها را پیگیری کنید.
+                    </p>
+                </div>
+            </section>
+
+            <section class="py-14 sm:py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                        <!-- Contact Info & Messengers -->
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="bg-slate-50 border border-slate-200/80 rounded-3xl p-6 space-y-5">
+                                <h2 class="text-xl font-black text-brand-navy">راه‌های ارتباط مستقیم با ادمین</h2>
+
+                                <div class="flex items-start gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-teal-100 text-brand-turquoise flex items-center justify-center shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-sm text-brand-navy">نشانی دبیرخانه</h3>
+                                        <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">نیشابور، بلوار دانشگاه، پردیس دانشگاه نیشابور، ساختمان امور دانشجویی و تربیت‌بدنی، دفتر انجمن ورزشی</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-cyan-100 text-brand-cyan flex items-center justify-center shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-sm text-brand-navy">تلفن تماس و داخلی</h3>
+                                        <p class="text-xs text-slate-600 mt-0.5" dir="ltr">051-4224xxxx (داخلی ۲۵۴)</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-brand-gold flex items-center justify-center shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-sm text-brand-navy">پست الکترونیک رسمی</h3>
+                                        <p class="text-xs text-slate-600 mt-0.5">sports.association@stu.neyshabur.ac.ir</p>
+                                    </div>
+                                </div>
+
+                                <div class="pt-4 border-t border-slate-200">
+                                    <p class="text-xs font-bold text-brand-navy mb-3">ارتباط سریع در پیام‌رسان‌ها و پنل مدیریت:</p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                        <button type="button" onclick="openMessengerInfo('ادمین پاسخگو در تلگرام', '@NSU_Sports_Admin')" class="flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold py-3 px-4 rounded-xl transition">
+                                            <i class="fa-brands fa-telegram text-base"></i>
+                                            <span>ادمین تلگرام</span>
+                                        </button>
+                                        <button type="button" onclick="openMessengerInfo('کانال رسمی در ایتا', 'eitaa.com/nsu_sports')" class="flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-3 px-4 rounded-xl transition">
+                                            <i class="fa-solid fa-comment-dots text-base"></i>
+                                            <span>کانال ایتا</span>
+                                        </button>
+                                    </div>
+                                    <button type="button" onclick="handleAdminNavClick()" class="mt-2.5 w-full flex items-center justify-center gap-2 bg-brand-navy hover:bg-slate-800 text-white text-xs font-bold py-3 px-4 rounded-xl transition">
+                                        <i class="fa-solid fa-user-shield text-brand-gold"></i>
+                                        <span>ورود اعضا و ادمین به پنل مدیریت</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ticket Form + Student Ticket Tracker -->
+                        <div class="lg:col-span-7 space-y-8">
+                            <!-- Submit New Ticket -->
+                            <div class="bg-slate-50 border border-slate-200/80 rounded-3xl p-6 sm:p-8">
+                                <h2 class="text-xl font-black text-brand-navy mb-1">ارسال تیکت و پیام به مسئول مربوطه</h2>
+                                <p class="text-xs text-slate-500 mb-6">هر موضوع مستقیماً به کارشناس/مسئول همان بخش ارسال می‌شود. تیکت‌های قدیمی‌تر از ۳ ماه به صورت خودکار پاکسازی می‌شوند.</p>
+
+                                <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1.5">نام و نام خانوادگی *</label>
+                                            <input type="text" id="ticket-fullname" required placeholder="مثال: علی محمدی" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-turquoise">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1.5">شماره دانشجویی *</label>
+                                            <input type="number" id="ticket-student-id" required placeholder="مثال: 401123456" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-turquoise">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1.5">موضوع پیام (ارجاع به مسئول بخش)</label>
+                                        <select id="ticket-subject" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-turquoise">
+                                            <option value="ثبت‌نام و استعلام مسابقات">ثبت‌نام و استعلام مسابقات (مسئول مسابقات)</option>
+                                            <option value="پیشنهادات و انتقادات">پیشنهادات و انتقادات (روابط عمومی)</option>
+                                            <option value="درخواست همکاری / مربیگری">درخواست همکاری / مربیگری (ورزش همگانی)</option>
+                                            <option value="پیگیری مدارک و احکام ورزشی">پیگیری مدارک و احکام ورزشی (امور مدارک)</option>
+                                            <option value="سایر موارد">سایر موارد (امور مدارک و دبیرخانه)</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1.5">متن پیام / تیکت *</label>
+                                        <textarea id="ticket-message" rows="4" required placeholder="توضیحات یا سوال خود را با جزئیات بنویسید..." class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-turquoise"></textarea>
+                                    </div>
+
+                                    <button type="submit" class="w-full bg-brand-turquoise hover:bg-teal-700 text-white font-bold py-3.5 rounded-xl text-xs sm:text-sm transition shadow-md flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                        <span>ثبت و ارسال تیکت</span>
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Student Ticket Lookup & Conversation Box -->
+                            <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
+                                <div>
+                                    <h3 class="text-lg font-black text-brand-navy flex items-center gap-2">
+                                        <i class="fa-solid fa-comments text-brand-turquoise"></i>
+                                        <span>پیگیری تیکت‌ها و گفتگوی پاسخ</span>
+                                    </h3>
+                                    <p class="text-xs text-slate-500 mt-1">با وارد کردن <strong>کد رهگیری</strong> یا <strong>شماره دانشجویی</strong>، تیکت‌های خود را ببینید و پاسخ تکمیلی ارسال کنید.</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <input type="text" id="lookup-tracking-code" placeholder="کد رهگیری (مثال: NSU-1001)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-turquoise">
+                                    <input type="number" id="lookup-student-id" placeholder="یا شماره دانشجویی (مثال: 401123456)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-turquoise">
+                                </div>
+
+                                <div class="flex flex-wrap gap-2.5">
+                                    <button type="button" onclick="handleLookupTickets()" class="bg-brand-navy hover:bg-slate-800 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition flex items-center gap-1.5">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                        <span>جستجو و نمایش تیکت‌ها</span>
+                                    </button>
+                                    <button type="button" onclick="showAllStoredTicketsForDemo()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2.5 rounded-xl text-xs transition">
+                                        نمایش همه تیکت‌های ثبت‌شده
+                                    </button>
+                                </div>
+
+                                <div id="student-tickets-results" class="space-y-4 pt-2">
+                                    <p class="text-xs text-slate-400 text-center py-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                                        کد رهگیری یا شماره دانشجویی را وارد کرده و دکمه جستجو را بزنید.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== PAGE 7: ADMIN PANEL ==================== -->
+        <div id="page-admin" class="page-view hidden">
+            <section class="bg-slate-900 text-white py-10 sm:py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 bg-amber-500/20 text-brand-gold border border-amber-400/30 text-xs font-bold px-3 py-1 rounded-full mb-2">
+                            <i class="fa-solid fa-shield-halved"></i> محیط مدیریت شورای انجمن
+                        </span>
+                        <h1 class="text-2xl sm:text-3xl font-black">پنل مدیریت تیکت‌ها و ثبت‌نام رویدادها</h1>
+                        <p id="admin-profile-name" class="text-xs sm:text-sm text-teal-300 font-semibold mt-1">در حال بارگذاری...</p>
+                        <p id="admin-access-scope-badge" class="text-[11px] text-slate-300 mt-1"></p>
+                    </div>
+
+                    <button type="button" onclick="logoutAdmin()" class="bg-red-500/20 hover:bg-red-500/30 border border-red-400/30 text-red-200 text-xs font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-2 self-start md:self-auto">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>خروج از حساب کاربری</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="py-10 sm:py-14 bg-brand-surface">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+                    <!-- Ticket Stats Row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
+                            <span class="text-xs text-slate-500">تعداد تیکت‌های در دسترس شما</span>
+                            <div id="admin-stat-total" class="text-2xl font-black text-brand-navy mt-1">۰</div>
+                        </div>
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
+                            <span class="text-xs text-slate-500">در انتظار پاسخ</span>
+                            <div id="admin-stat-pending" class="text-2xl font-black text-amber-600 mt-1">۰</div>
+                        </div>
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
+                            <span class="text-xs text-slate-500">پاسخ داده شده / بسته شده</span>
+                            <div id="admin-stat-answered" class="text-2xl font-black text-emerald-600 mt-1">۰</div>
+                        </div>
+                    </div>
+
+                    <!-- Tickets Management Card -->
+                    <div class="bg-white rounded-3xl p-6 shadow-xl border border-slate-200 space-y-5">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                            <div>
+                                <h2 class="font-black text-slate-900 text-lg">صندوق تیکت‌ها و گفتگوی رسمی</h2>
+                                <p id="admin-list-subtitle" class="text-xs text-slate-500 mt-0.5">طبقه‌بندی منظم بر اساس ماه و روز</p>
+                            </div>
+
+                            <!-- Status Filter Buttons -->
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <button type="button" onclick="filterAdminTickets('all', this)" data-status-filter="all" class="admin-status-btn bg-brand-navy text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition">همه وضعیت‌ها</button>
+                                <button type="button" onclick="filterAdminTickets('pending', this)" data-status-filter="pending" class="admin-status-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3.5 py-1.5 rounded-xl text-xs font-bold transition">در انتظار پاسخ</button>
+                                <button type="button" onclick="filterAdminTickets('answered', this)" data-status-filter="answered" class="admin-status-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3.5 py-1.5 rounded-xl text-xs font-bold transition">پاسخ داده شده</button>
+                                <button type="button" onclick="filterAdminTickets('closed', this)" data-status-filter="closed" class="admin-status-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3.5 py-1.5 rounded-xl text-xs font-bold transition">بسته شده</button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Time Range Buttons -->
+                        <div class="bg-slate-50 border border-slate-200/70 rounded-2xl p-3.5">
+                            <p class="text-[11px] font-bold text-slate-600 mb-2.5 flex items-center gap-1.5">
+                                <i class="fa-solid fa-clock-rotate-left text-brand-turquoise"></i>
+                                <span>فیلتر سریع بازه زمانی:</span>
+                            </p>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <button type="button" onclick="filterAdminTimeRange('all', this)" data-time-range="all" class="admin-time-btn bg-brand-turquoise text-white px-3 py-1.5 rounded-xl text-xs font-bold transition">همه بازه‌ها</button>
+                                <button type="button" onclick="filterAdminTimeRange('today', this)" data-time-range="today" class="admin-time-btn bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 px-3 py-1.5 rounded-xl text-xs font-bold transition">امروز</button>
+                                <button type="button" onclick="filterAdminTimeRange('yesterday', this)" data-time-range="yesterday" class="admin-time-btn bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 px-3 py-1.5 rounded-xl text-xs font-bold transition">دیروز</button>
+                                <button type="button" onclick="filterAdminTimeRange('this_week', this)" data-time-range="this_week" class="admin-time-btn bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 px-3 py-1.5 rounded-xl text-xs font-bold transition">این هفته</button>
+                                <button type="button" onclick="filterAdminTimeRange('last_week', this)" data-time-range="last_week" class="admin-time-btn bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 px-3 py-1.5 rounded-xl text-xs font-bold transition">هفته پیش</button>
+                                <button type="button" onclick="filterAdminTimeRange('this_month', this)" data-time-range="this_month" class="admin-time-btn bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 px-3 py-1.5 rounded-xl text-xs font-bold transition">این ماه</button>
+                                <button type="button" onclick="filterAdminTimeRange('last_month', this)" data-time-range="last_month" class="admin-time-btn bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 px-3 py-1.5 rounded-xl text-xs font-bold transition">ماه پیش</button>
+                                <button type="button" onclick="filterAdminTimeRange('two_months_ago', this)" data-time-range="two_months_ago" class="admin-time-btn bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 px-3 py-1.5 rounded-xl text-xs font-bold transition">۲ ماه پیش</button>
+                            </div>
+                        </div>
+
+                        <!-- Grouped Month & Day Tickets List -->
+                        <div id="admin-tickets-container" class="space-y-6">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Event Registrations Management Section for Secretary & Registration Officer -->
+                    <div id="admin-event-registrations-panel" class="bg-white rounded-3xl p-6 shadow-xl border border-slate-200 space-y-5 hidden">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-medal text-brand-turquoise"></i>
+                                    <span>مدیریت و تایید ثبت‌نام مسابقات (دانشگاهی و کشوری)</span>
+                                </h3>
+                                <p class="text-[11px] text-slate-500 mt-0.5">بررسی درخواست‌های دانشجویان، تایید نهایی ثبت‌نام یا رد درخواست</p>
+                            </div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <button type="button" onclick="filterAdminEventRegs('all', this)" data-reg-filter="all" class="admin-reg-filter-btn bg-brand-navy text-white px-3 py-1.5 rounded-lg text-xs font-semibold">همه (<span id="reg-count-all">0</span>)</button>
+                                <button type="button" onclick="filterAdminEventRegs('pending', this)" data-reg-filter="pending" class="admin-reg-filter-btn bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold">در انتظار تایید (<span id="reg-count-pending">0</span>)</button>
+                                <button type="button" onclick="filterAdminEventRegs('approved', this)" data-reg-filter="approved" class="admin-reg-filter-btn bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold">تایید شده (<span id="reg-count-approved">0</span>)</button>
+                                <button type="button" onclick="filterAdminEventRegs('rejected', this)" data-reg-filter="rejected" class="admin-reg-filter-btn bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold">رد شده (<span id="reg-count-rejected">0</span>)</button>
+                            </div>
+                        </div>
+
+                        <div id="admin-event-registrations-container" class="space-y-3">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-brand-navy text-slate-300 pt-14 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-10 border-b border-slate-800">
+                <!-- Brand -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-turquoise to-brand-cyan flex items-center justify-center">
+                            <i class="fa-solid fa-trophy text-white"></i>
+                        </div>
+                        <div>
+                            <span class="font-extrabold text-white text-base block">انجمن ورزشی دانشگاه نیشابور</span>
+                            <span class="text-xs text-teal-400">پرتال رسمی رویدادها و افتخارات</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-md">
+                        تلاش ما ایجاد محیطی سالم، بانشاط و رقابتی برای شکوفایی استعدادهای ورزشی دانشجویان دانشگاه نیشابور در سطوح درون‌دانشگاهی، منطقه‌ای و کشوری است.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="lg:col-span-3 space-y-3">
+                    <h4 class="text-white font-bold text-sm">دسترسی سریع</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><button type="button" onclick="navigateTo('home')" class="hover:text-brand-cyan transition">صفحه اصلی</button></li>
+                        <li><button type="button" onclick="navigateTo('about')" class="hover:text-brand-cyan transition">درباره انجمن</button></li>
+                        <li><button type="button" onclick="navigateTo('university-events')" class="hover:text-brand-cyan transition">رویدادهای دانشگاهی</button></li>
+                        <li><button type="button" onclick="navigateTo('national-events')" class="hover:text-brand-cyan transition">رویدادهای کشوری</button></li>
+                        <li><button type="button" onclick="navigateTo('gallery')" class="hover:text-brand-cyan transition">گالری تصاویر</button></li>
+                        <li><button type="button" onclick="navigateTo('contact')" class="hover:text-brand-cyan transition">ارتباط با ما / تیکت</button></li>
+                    </ul>
+                </div>
+
+                <!-- Address -->
+                <div class="lg:col-span-4 space-y-3">
+                    <h4 class="text-white font-bold text-sm">اطلاعات تماس و نشانی</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed flex items-start gap-2">
+                        <i class="fa-solid fa-location-dot text-brand-turquoise mt-1"></i>
+                        <span>نیشابور، بلوار دانشگاه، پردیس دانشگاه نیشابور، دفتر انجمن ورزشی</span>
+                    </p>
+                    <p class="text-xs text-slate-400 flex items-center gap-2">
+                        <i class="fa-solid fa-envelope text-brand-turquoise"></i>
+                        <span>sports.association@stu.neyshabur.ac.ir</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>© ۱۴۰۳ انجمن ورزشی دانشگاه نیشابور. تمامی حقوق محفوظ است.</p>
+                <p>طراحی‌شده با استانداردهای رسمی دانشگاهی</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- 1. Event Registration Modal -->
+    <div id="event-modal" onclick="handleBackdropClose(event, 'event-modal')" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative animate-fade-in">
+            <button type="button" onclick="closeModal('event-modal')" class="absolute top-5 left-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span class="text-xs font-bold text-brand-turquoise">درخواست ثبت‌نام در رویداد</span>
+            <h3 id="modal-event-title" class="text-lg font-black text-brand-navy mt-1 mb-5">ثبت‌نام در مسابقه</h3>
+
+            <form onsubmit="handleEventRegister(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">نام و نام خانوادگی</label>
+                    <input type="text" id="reg-fullname" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-brand-turquoise">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">شماره دانشجویی</label>
+                        <input type="number" id="reg-student-id" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-brand-turquoise">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">رشته تحصیلی *</label>
+                        <select id="reg-major" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-brand-turquoise">
+                            <option value="">انتخاب رشته تحصیلی...</option>
+                            <option value="مهندسی کامپیوتر">مهندسی کامپیوتر</option>
+                            <option value="مهندسی برق">مهندسی برق</option>
+                            <option value="مهندسی مکانیک">مهندسی مکانیک</option>
+                            <option value="مهندسی عمران">مهندسی عمران</option>
+                            <option value="علوم ورزشی">علوم ورزشی</option>
+                            <option value="مدیریت ورزشی">مدیریت ورزشی</option>
+                            <option value="زبان و ادبیات فارسی">زبان و ادبیات فارسی</option>
+                            <option value="زبان و ادبیات انگلیسی">زبان و ادبیات انگلیسی</option>
+                            <option value="ریاضی و کاربردها">ریاضی و کاربردها</option>
+                            <option value="فیزیک">فیزیک</option>
+                            <option value="شیمی">شیمی</option>
+                            <option value="روانشناسی">روانشناسی</option>
+                            <option value="حقوق">حقوق</option>
+                            <option value="حسابداری">حسابداری</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">شماره تماس (واتساپ / ایتا / موبایل)</label>
+                    <input type="tel" id="reg-phone" required placeholder="09xxxxxxxxx" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-brand-turquoise">
+                </div>
+                <button type="submit" class="w-full bg-brand-turquoise hover:bg-teal-700 text-white font-bold py-3 rounded-xl text-xs sm:text-sm transition shadow-md">
+                    ارسال درخواست ثبت‌نام
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. Admin Login Modal -->
+    <div id="admin-login-modal" onclick="handleBackdropClose(event, 'admin-login-modal')" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+            <button type="button" onclick="closeModal('admin-login-modal')" class="absolute top-5 left-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl mb-3">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <h3 class="text-lg font-black text-brand-navy">ورود اعضای شورا و ادمین‌ها</h3>
+            <p class="text-xs text-slate-500 mt-1 mb-4">کد دانشجویی تعریف‌شده مسئول یا دبیر را وارد کنید تا وارد پنل اختصاصی شوید.</p>
+
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">کد دانشجویی عضو شورا / ادمین</label>
+                    <input type="number" id="admin-login-student-id" required placeholder="مثال: 401123456" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-brand-turquoise">
+                </div>
+
+                <!-- Helper Hint Credentials Box -->
+                <div class="bg-amber-50/80 border border-amber-200/80 rounded-xl p-3 text-[11px] text-amber-900 space-y-1">
+                    <p class="font-bold flex items-center gap-1"><i class="fa-solid fa-info-circle text-amber-600"></i> کدهای دانشجویی اعضای شورا و موضوعات تحت پوشش:</p>
+                    <p>• دبیر انجمن (همه تیکت‌ها + تایید ثبت‌نام رویدادها): <code class="bg-amber-100 px-1 py-0.5 rounded font-bold">401123456</code></p>
+                    <p>• مسئول مسابقات و ثبت‌نام رویدادها: <code class="bg-amber-100 px-1 py-0.5 rounded font-bold">402112233</code></p>
+                    <p>• روابط عمومی (پیشنهادات و انتقادات + ماه و روز): <code class="bg-amber-100 px-1 py-0.5 rounded font-bold">401987654</code></p>
+                    <p>• کمیته اجرایی/ورزش همگانی (درخواست همکاری / مربیگری + ماه و روز): <code class="bg-amber-100 px-1 py-0.5 rounded font-bold">402334455</code></p>
+                    <p>• امور اداری/مدارک (پیگیری مدارک و احکام ورزشی + سایر موارد + ماه و روز): <code class="bg-amber-100 px-1 py-0.5 rounded font-bold">402556677</code></p>
+                </div>
+
+                <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>ورود به پنل مدیریت</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. Ticket Tracking Code Confirmation & Copy Modal -->
+    <div id="tracking-code-modal" onclick="handleBackdropClose(event, 'tracking-code-modal')" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-center">
+            <button type="button" onclick="closeModal('tracking-code-modal')" class="absolute top-5 left-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mx-auto mb-3">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="text-lg font-black text-brand-navy">تیکت شما با موفقیت ثبت شد!</h3>
+            <p class="text-xs text-slate-500 mt-1">پیام شما برای مسئول مربوطه ارسال شد. کد رهگیری زیر را کپی یا یادداشت کنید:</p>
+
+            <div class="my-5 bg-slate-50 border-2 border-dashed border-brand-turquoise rounded-2xl p-4">
+                <span class="block text-[11px] text-slate-500 mb-1">کد رهگیری اختصاصی شما</span>
+                <div id="created-tracking-code-display" class="text-2xl font-black text-brand-navy tracking-wider font-mono select-all">NSU-1001</div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2.5">
+                <button type="button" onclick="copyCreatedTrackingCode()" class="flex-1 bg-brand-turquoise hover:bg-teal-700 text-white font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5">
+                    <i class="fa-regular fa-copy"></i>
+                    <span id="copy-code-btn-label">کپی کد رهگیری</span>
+                </button>
+                <button type="button" onclick="goToTicketConversationFromModal()" class="flex-1 bg-brand-navy hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>مشاهده گفتگو</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. News / Event Details Modal -->
+    <div id="news-modal" onclick="handleBackdropClose(event, 'news-modal')" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
+            <button type="button" onclick="closeModal('news-modal')" class="absolute top-5 left-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span class="text-xs font-bold text-brand-turquoise">جزئیات رسمی</span>
+            <h3 id="news-modal-title" class="text-xl font-black text-brand-navy mt-1 mb-4">عنوان</h3>
+            <p id="news-modal-body" class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">متن جزئیات</p>
+            <button type="button" onclick="closeModal('news-modal')" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-xs transition">
+                بستن پنجره
+            </button>
+        </div>
+    </div>
+
+    <!-- 5. Lightbox Modal -->
+    <div id="lightbox-modal" onclick="handleBackdropClose(event, 'lightbox-modal')" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+        <div class="max-w-3xl w-full relative">
+            <button type="button" onclick="closeModal('lightbox-modal')" class="absolute -top-10 left-0 w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <img id="lightbox-img" src="" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/0F172A/5EEAD4?text=Nishapur+Sports+Gallery';" alt="" class="w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl bg-slate-950">
+            <p id="lightbox-caption" class="text-white text-center text-xs sm:text-sm font-semibold mt-3"></p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 left-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 max-w-sm">
+            <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg shrink-0"></i>
+            <div>
+                <p id="toast-title" class="text-xs font-bold">اعلان</p>
+                <p id="toast-message" class="text-[11px] text-slate-300 mt-0.5">پیام سیستم</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        const RETENTION_DAYS = 90; // 3 months auto-delete threshold
+        const RETENTION_MS = RETENTION_DAYS * 24 * 60 * 60 * 1000;
+
+        const pageTitles = {
+            'home': 'صفحه اصلی',
+            'about': 'درباره ما',
+            'university-events': 'رویدادهای دانشگاهی',
+            'national-events': 'رویدادهای کشوری',
+            'gallery': 'گالری تصاویر',
+            'contact': 'ارتباط با ما / تیکت',
+            'admin': 'پنل مدیریت'
+        };
+
+        // Predefined Council Admin Accounts with Topic Ownership & Super-Admin (Secretary) Flag
+        const ADMIN_ACCOUNTS = {
+            '401123456': {
+                name: 'امیرحسین حسینی',
+                role: 'دبیر انجمن ورزشی',
+                isSecretary: true,
+                canManageRegistrations: true,
+                subjects: ['ALL']
+            },
+            '402112233': {
+                name: 'سارا رستمی',
+                role: 'مسئول کمیته مسابقات و ثبت‌نام رویدادها',
+                isSecretary: false,
+                canManageRegistrations: true,
+                subjects: ['ثبت‌نام و استعلام مسابقات']
+            },
+            '401987654': {
+                name: 'علی رضایی',
+                role: 'مدیر روابط عمومی',
+                isSecretary: false,
+                canManageRegistrations: false,
+                subjects: ['پیشنهادات و انتقادات']
+            },
+            '402334455': {
+                name: 'مریم نوری',
+                role: 'مسئول ورزش همگانی و همکاری',
+                isSecretary: false,
+                canManageRegistrations: false,
+                subjects: ['درخواست همکاری / مربیگری']
+            },
+            '402556677': {
+                name: 'حسین کاظمی',
+                role: 'مسئول امور مدارک و دبیرخانه',
+                isSecretary: false,
+                canManageRegistrations: false,
+                subjects: ['پیگیری مدارک و احکام ورزشی', 'سایر موارد']
+            }
+        };
+
+        // ==================== SPA NAVIGATION & HAMBURGER DRAWER ====================
+        function toggleDrawer(forceOpen = null) {
+            const backdrop = document.getElementById('drawer-backdrop');
+            const panel = document.getElementById('drawer-panel');
+            if (!backdrop || !panel) return;
+
+            const isCurrentlyOpen = panel.classList.contains('open');
+            const shouldOpen = forceOpen !== null ? forceOpen : !isCurrentlyOpen;
+
+            if (shouldOpen) {
+                backdrop.classList.add('open');
+                panel.classList.add('open');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                backdrop.classList.remove('open');
+                panel.classList.remove('open');
+                if (!document.querySelector('.modal-backdrop:not(.hidden)')) {
+                    document.body.classList.remove('overflow-hidden');
+                }
+            }
+        }
+
+        function updateActiveDrawerNav(pageId) {
+            document.querySelectorAll('.drawer-nav-btn').forEach(btn => {
+                const navTarget = btn.getAttribute('data-nav');
+                if (navTarget === pageId) {
+                    btn.classList.add('bg-teal-50', 'text-brand-turquoise', 'border', 'border-teal-200/70');
+                    btn.classList.remove('text-slate-700');
+                } else {
+                    btn.classList.remove('bg-teal-50', 'text-brand-turquoise', 'border', 'border-teal-200/70');
+                    if (navTarget !== 'admin') {
+                        btn.classList.add('text-slate-700');
+                    }
+                }
+            });
+        }
+
+        function navigateTo(pageId) {
+            const targetEl = document.getElementById('page-' + pageId);
+            if (!targetEl) return;
+
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.add('hidden');
+            });
+
+            targetEl.classList.remove('hidden');
+
+            const indicator = document.getElementById('current-page-indicator');
+            if (indicator) {
+                indicator.textContent = pageTitles[pageId] || 'انجمن ورزشی';
+            }
+            document.title = (pageTitles[pageId] ? pageTitles[pageId] + ' | ' : '') + 'انجمن ورزشی دانشگاه نیشابور';
+
+            updateActiveDrawerNav(pageId);
+            toggleDrawer(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (pageId === 'university-events') {
+                renderEventRegistrationsList(currentLookupStudentId);
+            } else if (pageId === 'admin') {
+                const admin = getCurrentAdminSession();
+                if (!admin) {
+                    openModal('admin-login-modal');
+                } else {
+                    renderAdminDashboard();
+                }
+            }
+        }
+
+        function handleAdminNavClick() {
+            toggleDrawer(false);
+            const admin = getCurrentAdminSession();
+            if (admin) {
+                navigateTo('admin');
+                renderAdminDashboard();
+            } else {
+                openModal('admin-login-modal');
+            }
+        }
+
+        // ==================== TOAST & MODALS ====================
+        function showToast(title, message, isSuccess = true) {
+            const toast = document.getElementById('toast');
+            const titleEl = document.getElementById('toast-title');
+            const msgEl = document.getElementById('toast-message');
+            const iconEl = document.getElementById('toast-icon');
+
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+
+            if (isSuccess) {
+                iconEl.className = 'fa-solid fa-circle-check text-emerald-400 text-lg shrink-0';
+            } else {
+                iconEl.className = 'fa-solid fa-circle-exclamation text-amber-400 text-lg shrink-0';
+            }
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 4200);
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+            modal.classList.add('hidden');
+            const drawerOpen = document.getElementById('drawer-panel')?.classList.contains('open');
+            const anyModalOpen = document.querySelector('.modal-backdrop:not(.hidden)');
+            if (!drawerOpen && !anyModalOpen) {
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
+        function handleBackdropClose(event, modalId) {
+            if (event.target && event.target.id === modalId) {
+                closeModal(modalId);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const openModals = document.querySelectorAll('.modal-backdrop:not(.hidden)');
+                if (openModals.length > 0) {
+                    openModals.forEach(m => m.classList.add('hidden'));
+                    const drawerOpen = document.getElementById('drawer-panel')?.classList.contains('open');
+                    if (!drawerOpen) document.body.classList.remove('overflow-hidden');
+                    return;
+                }
+                if (document.getElementById('drawer-panel')?.classList.contains('open')) {
+                    toggleDrawer(false);
+                }
+            }
+        });
+
+        function openRegisterModal(eventName) {
+            const titleEl = document.getElementById('modal-event-title');
+            titleEl.textContent = 'ثبت‌نام در: ' + eventName;
+            titleEl.setAttribute('data-event-name', eventName);
+            openModal('event-modal');
+        }
+
+        function showNewsDetails(title, body) {
+            document.getElementById('news-modal-title').textContent = title;
+            document.getElementById('news-modal-body').textContent = body;
+            openModal('news-modal');
+        }
+
+        function openLightbox(src, caption) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-caption').textContent = caption;
+            openModal('lightbox-modal');
+        }
+
+        function openMessengerInfo(platformName, handleOrLink) {
+            showToast(platformName, 'شناسه / آدرس رسمی: ' + handleOrLink);
+        }
+
+        // ==================== UNIVERSITY & NATIONAL EVENTS FILTERS ====================
+        function filterEvents(category, btnEl = null) {
+            document.querySelectorAll('.event-tab').forEach(btn => {
+                btn.classList.remove('active', 'bg-brand-navy', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+            });
+
+            if (btnEl) {
+                btnEl.classList.add('active', 'bg-brand-navy', 'text-white');
+                btnEl.classList.remove('bg-slate-100', 'text-slate-600');
+                btnEl.blur();
+            }
+
+            document.querySelectorAll('.event-card').forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function filterNationalEvents(category, btnEl = null) {
+            document.querySelectorAll('.nat-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-turquoise', 'text-white');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+            });
+
+            if (btnEl) {
+                btnEl.classList.remove('bg-slate-800', 'text-slate-300');
+                btnEl.classList.add('bg-brand-turquoise', 'text-white');
+                btnEl.blur();
+            }
+
+            document.querySelectorAll('.national-card').forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function filterGallery(category, btnEl = null) {
+            document.querySelectorAll('.gallery-filter').forEach(btn => {
+                btn.classList.remove('active', 'bg-brand-turquoise', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+            });
+
+            if (btnEl) {
+                btnEl.classList.add('active', 'bg-brand-turquoise', 'text-white');
+                btnEl.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+                btnEl.blur();
+            }
+
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        // ==================== TICKETS DATABASE, 3-MONTH AUTO-CLEANUP & MONTH/DAY GROUPING ====================
+        function getDaysAgoISO(daysAgo) {
+            return new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000).toISOString();
+        }
+
+        function formatPersianDateFromISO(isoString) {
+            const d = new Date(isoString);
+            if (isNaN(d.getTime())) return 'نامشخص';
+            return d.toLocaleDateString('fa-IR');
+        }
+
+        function getMonthKeyAndLabel(isoString) {
+            const d = new Date(isoString);
+            if (isNaN(d.getTime())) return { key: 'unknown', label: 'نامشخص', sortVal: 0 };
+            const parts = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+                year: 'numeric',
+                month: 'long'
+            }).formatToParts(d);
+            const yearPart = parts.find(p => p.type === 'year')?.value || '';
+            const monthPart = parts.find(p => p.type === 'month')?.value || '';
+            const label = `${monthPart} ${yearPart}`.trim();
+            const dayBucket = Math.floor(d.getTime() / (24 * 60 * 60 * 1000));
+            return { key: label, label, sortVal: dayBucket };
+        }
+
+        function getDayKeyAndLabel(isoString) {
+            const d = new Date(isoString);
+            if (isNaN(d.getTime())) return { key: 'unknown', label: 'نامشخص', sortVal: 0 };
+            const fullDate = d.toLocaleDateString('fa-IR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            const dayBucket = Math.floor(d.getTime() / (24 * 60 * 60 * 1000));
+            return { key: fullDate, label: fullDate, sortVal: dayBucket };
+        }
+
+        function pruneExpiredTickets(ticketsList) {
+            const now = Date.now();
+            const validTickets = [];
+            let removedCount = 0;
+
+            for (const t of ticketsList) {
+                const createdTime = new Date(t.createdAtISO || t.updatedAtISO || now).getTime();
+                if (isNaN(createdTime) || (now - createdTime) > RETENTION_MS) {
+                    removedCount++;
+                } else {
+                    validTickets.push(t);
+                }
+            }
+
+            return { validTickets, removedCount };
+        }
+
+        function seedInitialTickets() {
+            const nowISO = new Date().toISOString();
+            const yesterdayISO = getDaysAgoISO(1);
+            const threeDaysAgoISO = getDaysAgoISO(3);
+            const tenDaysAgoISO = getDaysAgoISO(10);
+            const fortyDaysAgoISO = getDaysAgoISO(40);
+            const seventyDaysAgoISO = getDaysAgoISO(70);
+
+            return [
+                {
+                    id: 'TCK-' + (Date.now() - 500000),
+                    trackingCode: 'NSU-1001',
+                    fullName: 'محمدرضایی',
+                    studentId: '401120045',
+                    subject: 'ثبت‌نام و استعلام مسابقات',
+                    status: 'answered',
+                    createdAt: formatPersianDateFromISO(nowISO),
+                    createdAtISO: nowISO,
+                    messages: [
+                        {
+                            sender: 'student',
+                            senderName: 'محمد رضایی',
+                            text: 'سلام، برای ثبت‌نام تیم فوتسال دانشکده فنی چطور باید لیست اسامی را ارسال کنیم؟',
+                            time: formatPersianDateFromISO(nowISO)
+                        },
+                        {
+                            sender: 'admin',
+                            senderName: 'سارا رستمی (مسئول مسابقات)',
+                            text: 'سلام؛ از طریق دکمه ثبت‌نام در بخش رویدادهای دانشگاهی درخواست خود را ثبت کنید تا تایید نهایی انجام شود.',
+                            time: formatPersianDateFromISO(nowISO)
+                        }
+                    ]
+                },
+                {
+                    id: 'TCK-' + (Date.now() - 400000),
+                    trackingCode: 'NSU-1002',
+                    fullName: 'زهرا کریمی',
+                    studentId: '402150089',
+                    subject: 'پیشنهادات و انتقادات',
+                    status: 'pending',
+                    createdAt: formatPersianDateFromISO(yesterdayISO),
+                    createdAtISO: yesterdayISO,
+                    messages: [
+                        {
+                            sender: 'student',
+                            senderName: 'زهرا کریمی',
+                            text: 'پیشنهاد می‌کنم سانس‌های اختصاصی والیبال بانوان در ایام امتحانات میان‌ترم هم حفظ شود.',
+                            time: formatPersianDateFromISO(yesterdayISO)
+                        }
+                    ]
+                },
+                {
+                    id: 'TCK-' + (Date.now() - 300000),
+                    trackingCode: 'NSU-1003',
+                    fullName: 'پویا شریفی',
+                    studentId: '400180012',
+                    subject: 'درخواست همکاری / مربیگری',
+                    status: 'pending',
+                    createdAt: formatPersianDateFromISO(threeDaysAgoISO),
+                    createdAtISO: threeDaysAgoISO,
+                    messages: [
+                        {
+                            sender: 'student',
+                            senderName: 'پویا شریفی',
+                            text: 'دارای کارت مربیگری درجه ۳ آمادگی جسمانی هستم و تمایل به همکاری داوطلبانه در همایش‌های همگانی دارم.',
+                            time: formatPersianDateFromISO(threeDaysAgoISO)
+                        }
+                    ]
+                },
+                {
+                    id: 'TCK-' + (Date.now() - 200000),
+                    trackingCode: 'NSU-1004',
+                    fullName: 'نگار موسوی',
+                    studentId: '401190034',
+                    subject: 'پیگیری مدارک و احکام ورزشی',
+                    status: 'answered',
+                    createdAt: formatPersianDateFromISO(tenDaysAgoISO),
+                    createdAtISO: tenDaysAgoISO,
+                    messages: [
+                        {
+                            sender: 'student',
+                            senderName: 'نگار موسوی',
+                            text: 'وضعیت صدور حکم قهرمانی مسابقات بدمینتون ترم گذشته به کجا رسیده است؟',
+                            time: formatPersianDateFromISO(tenDaysAgoISO)
+                        },
+                        {
+                            sender: 'admin',
+                            senderName: 'حسین کاظمی (مسئول امور مدارک)',
+                            text: 'حکم شما آماده تحویل در دفتر انجمن ورزشی دانشگاه است.',
+                            time: formatPersianDateFromISO(tenDaysAgoISO)
+                        }
+                    ]
+                },
+                {
+                    id: 'TCK-' + (Date.now() - 100000),
+                    trackingCode: 'NSU-1005',
+                    fullName: 'امیر مرادی',
+                    studentId: '400140077',
+                    subject: 'سایر موارد',
+                    status: 'pending',
+                    createdAt: formatPersianDateFromISO(fortyDaysAgoISO),
+                    createdAtISO: fortyDaysAgoISO,
+                    messages: [
+                        {
+                            sender: 'student',
+                            senderName: 'امیر مرادی',
+                            text: 'امکان رزرو سالن برای تمرین تیم منتخب دانشکده در روزهای سه‌شنبه وجود دارد؟',
+                            time: formatPersianDateFromISO(fortyDaysAgoISO)
+                        }
+                    ]
+                },
+                {
+                    id: 'TCK-' + (Date.now() - 50000),
+                    trackingCode: 'NSU-1006',
+                    fullName: 'الهام باقری',
+                    studentId: '402130061',
+                    subject: 'پیشنهادات و انتقادات',
+                    status: 'closed',
+                    createdAt: formatPersianDateFromISO(seventyDaysAgoISO),
+                    createdAtISO: seventyDaysAgoISO,
+                    messages: [
+                        {
+                            sender: 'student',
+                            senderName: 'الهام باقری',
+                            text: 'تشکر بابت برگزاری منظم مسابقات درون‌دانشگاهی در ماه گذشته.',
+                            time: formatPersianDateFromISO(seventyDaysAgoISO)
+                        }
+                    ]
+                }
+            ];
+        }
+
+        function initTicketsDatabase() {
+            let tickets = [];
+            try {
+                const raw = localStorage.getItem('nsu_tickets_db');
+                if (raw === null) {
+                    tickets = seedInitialTickets();
+                    localStorage.setItem('nsu_tickets_db', JSON.stringify(tickets));
+                    return tickets;
+                }
+                const parsed = JSON.parse(raw);
+                tickets = Array.isArray(parsed) ? parsed : [];
+            } catch (err) {
+                console.error('Error initializing tickets DB:', err);
+                tickets = seedInitialTickets();
+            }
+
+            const { validTickets, removedCount } = pruneExpiredTickets(tickets);
+            if (removedCount > 0) {
+                saveTicketsDB(validTickets);
+            }
+            return validTickets;
+        }
+
+        function saveTicketsDB(tickets) {
+            try {
+                const { validTickets } = pruneExpiredTickets(tickets);
+                localStorage.setItem('nsu_tickets_db', JSON.stringify(validTickets));
+            } catch (err) {
+                console.error('Error saving tickets DB:', err);
+            }
+        }
+
+        function generateNextTrackingCode(existingTickets) {
+            let maxNum = 1000;
+            for (const t of existingTickets) {
+                const match = String(t.trackingCode || '').match(/NSU-(\d+)/i);
+                if (match) {
+                    const num = parseInt(match[1], 10);
+                    if (!isNaN(num) && num > maxNum) maxNum = num;
+                }
+            }
+            return 'NSU-' + (maxNum + 1);
+        }
+
+        let lastCreatedTrackingCode = '';
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const fullName = document.getElementById('ticket-fullname').value.trim();
+            const studentId = document.getElementById('ticket-student-id').value.trim();
+            const subject = document.getElementById('ticket-subject').value;
+            const messageText = document.getElementById('ticket-message').value.trim();
+
+            if (!fullName || !studentId || !messageText) return;
+
+            const tickets = initTicketsDatabase();
+            const trackingCode = generateNextTrackingCode(tickets);
+            const nowISO = new Date().toISOString();
+            const nowFormatted = formatPersianDateFromISO(nowISO);
+
+            const newTicket = {
+                id: 'TCK-' + Date.now(),
+                trackingCode,
+                fullName,
+                studentId,
+                subject,
+                status: 'pending',
+                createdAt: nowFormatted,
+                createdAtISO: nowISO,
+                messages: [
+                    {
+                        sender: 'student',
+                        senderName: fullName,
+                        text: messageText,
+                        time: nowFormatted
+                    }
+                ]
+            };
+
+            tickets.unshift(newTicket);
+            saveTicketsDB(tickets);
+
+            lastCreatedTrackingCode = trackingCode;
+            document.getElementById('created-tracking-code-display').textContent = trackingCode;
+            document.getElementById('copy-code-btn-label').textContent = 'کپی کد رهگیری';
+            openModal('tracking-code-modal');
+
+            document.getElementById('lookup-tracking-code').value = trackingCode;
+            document.getElementById('lookup-student-id').value = studentId;
+            renderStudentTickets([newTicket]);
+
+            e.target.reset();
+            if (getCurrentAdminSession()) {
+                renderAdminDashboard();
+            }
+        }
+
+        function copyCreatedTrackingCode() {
+            if (!lastCreatedTrackingCode) return;
+            const tempInput = document.createElement('input');
+            tempInput.value = lastCreatedTrackingCode;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                document.getElementById('copy-code-btn-label').textContent = 'کپی شد!';
+                showToast('کپی شد', 'کد رهگیری ' + lastCreatedTrackingCode + ' در کلیپ‌بورد کپی شد.');
+            } catch (err) {
+                showToast('خطا در کپی', 'لطفاً کد را به صورت دستی انتخاب و کپی کنید.', false);
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        function goToTicketConversationFromModal() {
+            closeModal('tracking-code-modal');
+            if (lastCreatedTrackingCode) {
+                document.getElementById('lookup-tracking-code').value = lastCreatedTrackingCode;
+                handleLookupTickets();
+            }
+        }
+
+        // ==================== STUDENT TICKET LOOKUP & THREAD REPLY ====================
+        function getStatusBadgeHTML(status) {
+            if (status === 'answered') {
+                return `<span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-1 rounded-full">پاسخ داده شده</span>`;
+            }
+            if (status === 'closed') {
+                return `<span class="bg-slate-200 text-slate-700 text-[11px] font-bold px-2.5 py-1 rounded-full">بسته شده</span>`;
+            }
+            return `<span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-1 rounded-full">در انتظار پاسخ</span>`;
+        }
+
+        function handleLookupTickets() {
+            const codeVal = document.getElementById('lookup-tracking-code').value.trim().toUpperCase();
+            const studentVal = document.getElementById('lookup-student-id').value.trim();
+
+            if (!codeVal && !studentVal) {
+                showToast('ورودی الزامی است', 'لطفاً کد رهگیری یا شماره دانشجویی را وارد کنید.', false);
+                return;
+            }
+
+            const allTickets = initTicketsDatabase();
+            const matched = allTickets.filter(t => {
+                const matchCode = codeVal ? String(t.trackingCode).toUpperCase() === codeVal : true;
+                const matchStudent = studentVal ? String(t.studentId).trim() === studentVal : true;
+                return matchCode && matchStudent;
+            });
+
+            renderStudentTickets(matched);
+        }
+
+        function showAllStoredTicketsForDemo() {
+            const allTickets = initTicketsDatabase();
+            renderStudentTickets(allTickets);
+        }
+
+        function renderStudentTickets(tickets) {
+            const container = document.getElementById('student-tickets-results');
+            if (!container) return;
+
+            if (!tickets || tickets.length === 0) {
+                container.innerHTML = `<p class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-2xl p-4 text-center">هیچ تیکتی با این مشخصات یافت نشد.</p>`;
+                return;
+            }
+
+            container.innerHTML = tickets.map(ticket => {
+                const messagesHTML = (ticket.messages || []).map(msg => {
+                    const isAdmin = msg.sender === 'admin';
+                    return `
+                        <div class="rounded-2xl p-3.5 text-xs ${isAdmin ? 'bg-teal-50 border border-teal-200/70 mr-4' : 'bg-slate-50 border border-slate-200/70 ml-4'}">
+                            <div class="flex items-center justify-between gap-2 mb-1">
+                                <span class="font-bold ${isAdmin ? 'text-teal-900' : 'text-slate-800'}">
+                                    <i class="fa-solid ${isAdmin ? 'fa-user-shield text-brand-turquoise' : 'fa-user text-slate-400'} ml-1"></i>
+                                    ${msg.senderName}
+                                </span>
+                                <span class="text-[10px] text-slate-400">${msg.time || ticket.createdAt}</span>
+                            </div>
+                            <p class="text-slate-700 leading-relaxed whitespace-pre-line">${msg.text}</p>
+                        </div>
+                    `;
+                }).join('');
+
+                const replyFormHTML = ticket.status === 'closed'
+                    ? `<p class="text-[11px] text-slate-500 bg-slate-100 rounded-xl p-3 text-center mt-3">این تیکت بسته شده است.</p>`
+                    : `
+                        <form onsubmit="handleStudentFollowUp(event, '${ticket.id}')" class="mt-3 flex flex-col sm:flex-row gap-2">
+                            <input type="text" id="student-reply-${ticket.id}" required placeholder="پاسخ تکمیلی خود را در همین گفتگو بنویسید..." class="flex-grow bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs focus:outline-none focus:border-brand-turquoise">
+                            <button type="submit" class="bg-brand-turquoise hover:bg-teal-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition shrink-0">
+                                ارسال پاسخ
+                            </button>
+                        </form>
+                    `;
+
+                return `
+                    <div class="border border-slate-200 rounded-2xl p-4 sm:p-5 bg-white space-y-3">
+                        <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
+                            <div>
+                                <span class="font-mono font-black text-xs bg-slate-100 text-brand-navy px-2.5 py-1 rounded-lg">${ticket.trackingCode}</span>
+                                <span class="font-bold text-sm text-brand-navy mr-2">${ticket.subject}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[11px] text-slate-400">${ticket.createdAt}</span>
+                                ${getStatusBadgeHTML(ticket.status)}
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            ${messagesHTML}
+                        </div>
+
+                        ${replyFormHTML}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleStudentFollowUp(e, ticketId) {
+            e.preventDefault();
+            const input = document.getElementById('student-reply-' + ticketId);
+            const text = input ? input.value.trim() : '';
+            if (!text) return;
+
+            const tickets = initTicketsDatabase();
+            const target = tickets.find(t => t.id === ticketId);
+            if (!target) return;
+
+            target.messages = target.messages || [];
+            target.messages.push({
+                sender: 'student',
+                senderName: target.fullName,
+                text,
+                time: formatPersianDateFromISO(new Date().toISOString())
+            });
+            target.status = 'pending';
+
+            saveTicketsDB(tickets);
+            input.value = '';
+
+            renderStudentTickets(tickets.filter(t => t.id === ticketId));
+            if (getCurrentAdminSession()) {
+                renderAdminDashboard();
+            }
+            showToast('پاسخ ارسال شد', 'پیام تکمیلی شما در ادامه همین کد رهگیری ثبت شد.');
+        }
+
+        // ==================== ADMIN AUTHENTICATION, TIME FILTERS & MONTH/DAY GROUPING ====================
+        function getCurrentAdminSession() {
+            try {
+                const sid = sessionStorage.getItem('nsu_active_admin_id');
+                if (!sid || !ADMIN_ACCOUNTS[sid]) return null;
+                return { studentId: sid, ...ADMIN_ACCOUNTS[sid] };
+            } catch (err) {
+                return null;
+            }
+        }
+
+        function updateAdminHeaderLabels() {
+            const admin = getCurrentAdminSession();
+            const headerBtnText = document.getElementById('header-admin-btn-text');
+            const drawerStatus = document.getElementById('drawer-admin-status');
+
+            if (admin) {
+                if (headerBtnText) headerBtnText.textContent = 'پنل ادمین (' + admin.name.split(' ')[0] + ')';
+                if (drawerStatus) {
+                    drawerStatus.textContent = 'فعال';
+                    drawerStatus.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900 font-bold';
+                }
+            } else {
+                if (headerBtnText) headerBtnText.textContent = 'ورود اعضا / ادمین';
+                if (drawerStatus) {
+                    drawerStatus.textContent = 'ورود';
+                    drawerStatus.className = 'text-[10px] px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-900';
+                }
+            }
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const sid = document.getElementById('admin-login-student-id').value.trim();
+            const account = ADMIN_ACCOUNTS[sid];
+
+            if (!account) {
+                showToast('کد دانشجویی نامعتبر', 'این کد دانشجویی به عنوان عضو شورا یا ادمین تعریف نشده است.', false);
+                return;
+            }
+
+            sessionStorage.setItem('nsu_active_admin_id', sid);
+            updateAdminHeaderLabels();
+            document.getElementById('admin-login-student-id').value = '';
+            closeModal('admin-login-modal');
+            navigateTo('admin');
+            renderAdminDashboard();
+            showToast('خوش آمدید', account.name + ' (' + account.role + ') وارد پنل شد.');
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('nsu_active_admin_id');
+            updateAdminHeaderLabels();
+            navigateTo('home');
+            showToast('خروج انجام شد', 'از حساب کاربری مدیریت خارج شدید.');
+        }
+
+        let currentAdminStatusFilter = 'all';
+        let currentAdminTimeRange = 'all';
+
+        function syncStatusFilterButtonsUI(statusKey) {
+            document.querySelectorAll('.admin-status-btn').forEach(btn => {
+                const isMatch = btn.getAttribute('data-status-filter') === statusKey;
+                if (isMatch) {
+                    btn.classList.remove('bg-slate-100', 'text-slate-700');
+                    btn.classList.add('bg-brand-navy', 'text-white');
+                } else {
+                    btn.classList.remove('bg-brand-navy', 'text-white');
+                    btn.classList.add('bg-slate-100', 'text-slate-700');
+                }
+            });
+        }
+
+        function syncTimeRangeButtonsUI(rangeKey) {
+            document.querySelectorAll('.admin-time-btn').forEach(btn => {
+                const isMatch = btn.getAttribute('data-time-range') === rangeKey;
+                if (isMatch) {
+                    btn.classList.remove('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+                    btn.classList.add('bg-brand-turquoise', 'text-white');
+                } else {
+                    btn.classList.remove('bg-brand-turquoise', 'text-white');
+                    btn.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+                }
+            });
+        }
+
+        function filterAdminTickets(statusKey, btnEl = null) {
+            currentAdminStatusFilter = statusKey;
+            syncStatusFilterButtonsUI(statusKey);
+            if (btnEl) btnEl.blur();
+            renderAdminTicketsList(currentAdminStatusFilter);
+        }
+
+        function filterAdminTimeRange(rangeKey, btnEl = null) {
+            currentAdminTimeRange = rangeKey;
+            syncTimeRangeButtonsUI(rangeKey);
+            if (btnEl) btnEl.blur();
+            renderAdminTicketsList(currentAdminStatusFilter);
+        }
+
+        function matchesTimeRange(isoString, rangeKey) {
+            if (!rangeKey || rangeKey === 'all') return true;
+            const d = new Date(isoString);
+            if (isNaN(d.getTime())) return false;
+
+            const now = new Date();
+            const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+            const dayMs = 24 * 60 * 60 * 1000;
+            const startOfYesterday = startOfToday - dayMs;
+            const ticketTime = d.getTime();
+
+            if (rangeKey === 'today') {
+                return ticketTime >= startOfToday;
+            }
+            if (rangeKey === 'yesterday') {
+                return ticketTime >= startOfYesterday && ticketTime < startOfToday;
+            }
+            if (rangeKey === 'this_week') {
+                const startOfThisWeek = startOfToday - (6 * dayMs);
+                return ticketTime >= startOfThisWeek;
+            }
+            if (rangeKey === 'last_week') {
+                const startOfThisWeek = startOfToday - (6 * dayMs);
+                const startOfLastWeek = startOfThisWeek - (7 * dayMs);
+                return ticketTime >= startOfLastWeek && ticketTime < startOfThisWeek;
+            }
+            if (rangeKey === 'this_month') {
+                const startOfThisMonth = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+                return ticketTime >= startOfThisMonth;
+            }
+            if (rangeKey === 'last_month') {
+                const startOfThisMonth = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+                const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1).getTime();
+                return ticketTime >= startOfLastMonth && ticketTime < startOfThisMonth;
+            }
+            if (rangeKey === 'two_months_ago') {
+                const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1).getTime();
+                const startOfTwoMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 2, 1).getTime();
+                return ticketTime >= startOfTwoMonthsAgo && ticketTime < startOfLastMonth;
+            }
+            return true;
+        }
+
+        function renderAdminDashboard() {
+            const admin = getCurrentAdminSession();
+            if (!admin) return;
+
+            document.getElementById('admin-profile-name').textContent = admin.name + ' (' + admin.role + ')';
+            document.getElementById('admin-access-scope-badge').textContent = admin.isSecretary
+                ? 'دسترسی کامل دبیر انجمن (تمامی موضوعات + مدیریت ثبت‌نام رویدادها)'
+                : 'دسترسی اختصاصی موضوعات: ' + admin.subjects.join(' ، ') + (admin.canManageRegistrations ? ' + مدیریت ثبت‌نام رویدادها' : ' (طبقه‌بندی ماه و روز)');
+
+            document.getElementById('admin-list-subtitle').textContent = admin.isSecretary
+                ? 'همه تیکت‌های فعال، دسته‌بندی‌شده بر اساس ماه و روز (قدیمی‌تر از ۳ ماه خودکار حذف می‌شوند)'
+                : 'تیکت‌های بخش شما، دسته‌بندی‌شده بر اساس ماه و روز (قدیمی‌تر از ۳ ماه خودکار حذف می‌شوند)';
+
+            const regPanel = document.getElementById('admin-event-registrations-panel');
+            if (regPanel) {
+                if (admin.isSecretary || admin.canManageRegistrations) {
+                    regPanel.classList.remove('hidden');
+                    currentAdminRegFilter = 'all';
+                    syncAdminRegFilterButtonsUI('all');
+                    renderAdminEventRegistrations();
+                } else {
+                    regPanel.classList.add('hidden');
+                }
+            }
+
+            renderAdminTicketsList(currentAdminStatusFilter);
+        }
+
+        function renderAdminTicketsList(statusFilter = 'all') {
+            const admin = getCurrentAdminSession();
+            const container = document.getElementById('admin-tickets-container');
+            if (!admin || !container) return;
+
+            const allTickets = initTicketsDatabase();
+
+            const scopedTickets = allTickets.filter(t => {
+                if (admin.isSecretary || admin.subjects.includes('ALL')) return true;
+                return admin.subjects.includes(t.subject);
+            });
+
+            document.getElementById('admin-stat-total').textContent = scopedTickets.length;
+            document.getElementById('admin-stat-pending').textContent = scopedTickets.filter(t => t.status === 'pending').length;
+            document.getElementById('admin-stat-answered').textContent = scopedTickets.filter(t => t.status === 'answered' || t.status === 'closed').length;
+
+            const filteredTickets = scopedTickets.filter(t => {
+                const statusOk = statusFilter === 'all' ? true : t.status === statusFilter;
+                const timeOk = matchesTimeRange(t.createdAtISO || t.createdAt, currentAdminTimeRange);
+                return statusOk && timeOk;
+            });
+
+            if (filteredTickets.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-400 text-xs py-8">هیچ تیکتی در این فیلتر وضعیت یا بازه زمانی وجود ندارد.</p>`;
+                return;
+            }
+
+            // Group by Month -> Day for all council members (Secretary + all officers)
+            const monthGroupsMap = new Map();
+
+            for (const ticket of filteredTickets) {
+                const iso = ticket.createdAtISO || new Date().toISOString();
+                const monthInfo = getMonthKeyAndLabel(iso);
+                const dayInfo = getDayKeyAndLabel(iso);
+
+                if (!monthGroupsMap.has(monthInfo.key)) {
+                    monthGroupsMap.set(monthInfo.key, {
+                        label: monthInfo.label,
+                        sortVal: monthInfo.sortVal,
+                        daysMap: new Map()
+                    });
+                }
+
+                const monthGroup = monthGroupsMap.get(monthInfo.key);
+                if (!monthGroup.daysMap.has(dayInfo.key)) {
+                    monthGroup.daysMap.set(dayInfo.key, {
+                        label: dayInfo.label,
+                        sortVal: dayInfo.sortVal,
+                        tickets: []
+                    });
+                }
+
+                monthGroup.daysMap.get(dayInfo.key).tickets.push(ticket);
+            }
+
+            const sortedMonths = Array.from(monthGroupsMap.values()).sort((a, b) => b.sortVal - a.sortVal);
+
+            container.innerHTML = sortedMonths.map(monthGroup => {
+                const sortedDays = Array.from(monthGroup.daysMap.values()).sort((a, b) => b.sortVal - a.sortVal);
+                const monthTicketCount = sortedDays.reduce((acc, d) => acc + d.tickets.length, 0);
+
+                const daysHTML = sortedDays.map(dayGroup => {
+                    const ticketCardsHTML = dayGroup.tickets.map(ticket => {
+                        const threadHTML = (ticket.messages || []).map(msg => {
+                            const isAdmin = msg.sender === 'admin';
+                            return `
+                                <div class="rounded-xl p-3 text-xs ${isAdmin ? 'bg-teal-50 border border-teal-200/70 mr-3' : 'bg-white border border-slate-200/80 ml-3'}">
+                                    <div class="flex items-center justify-between gap-2 mb-1">
+                                        <span class="font-bold ${isAdmin ? 'text-teal-900' : 'text-slate-800'}">${msg.senderName}</span>
+                                        <span class="text-[10px] text-slate-400">${msg.time || ticket.createdAt}</span>
+                                    </div>
+                                    <p class="text-slate-700 leading-relaxed whitespace-pre-line">${msg.text}</p>
+                                </div>
+                            `;
+                        }).join('');
+
+                        return `
+                            <div class="bg-slate-50/90 border border-slate-200/80 rounded-2xl p-4 sm:p-5 space-y-3">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <div>
+                                        <span class="font-mono font-bold text-xs bg-brand-navy text-white px-2.5 py-0.5 rounded-lg">${ticket.trackingCode}</span>
+                                        <span class="font-bold text-sm text-brand-navy mr-2">${ticket.subject}</span>
+                                        <span class="text-xs text-slate-500 mr-2">| ${ticket.fullName} (${ticket.studentId})</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        ${getStatusBadgeHTML(ticket.status)}
+                                        <button type="button" onclick="closeTicketByAdmin('${ticket.id}')" class="text-[11px] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-2.5 py-1 rounded-lg transition">
+                                            بستن تیکت
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    ${threadHTML}
+                                </div>
+
+                                <form onsubmit="handleAdminReply(event, '${ticket.id}')" class="flex flex-col sm:flex-row gap-2 pt-1">
+                                    <input type="text" id="admin-reply-${ticket.id}" required placeholder="پاسخ رسمی خود را به عنوان ${admin.role} بنویسید..." class="flex-grow bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-xs focus:outline-none focus:border-brand-turquoise">
+                                    <button type="submit" class="bg-brand-navy hover:bg-brand-turquoise text-white font-bold px-4 py-2 rounded-xl text-xs transition shrink-0">
+                                        ثبت پاسخ
+                                    </button>
+                                </form>
+                            </div>
+                        `;
+                    }).join('');
+
+                    return `
+                        <div class="border border-slate-200/70 rounded-2xl p-4 bg-white space-y-3">
+                            <div class="flex items-center justify-between text-xs font-bold text-slate-700 pb-2 border-b border-slate-100">
+                                <span class="flex items-center gap-2">
+                                    <i class="fa-regular fa-calendar-check text-brand-turquoise"></i>
+                                    <span>روز: ${dayGroup.label}</span>
+                                </span>
+                                <span class="bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full text-[11px]">${dayGroup.tickets.length} تیکت</span>
+                            </div>
+                            <div class="space-y-3">
+                                ${ticketCardsHTML}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="border border-teal-200/70 bg-teal-50/30 rounded-3xl p-4 sm:p-5 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-black text-base text-brand-navy flex items-center gap-2">
+                                <i class="fa-solid fa-layer-group text-brand-turquoise"></i>
+                                <span>ماه: ${monthGroup.label}</span>
+                            </h3>
+                            <span class="bg-teal-100 text-teal-900 text-xs font-bold px-3 py-1 rounded-full">${monthTicketCount} تیکت در این ماه</span>
+                        </div>
+                        <div class="space-y-3">
+                            ${daysHTML}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleAdminReply(e, ticketId) {
+            e.preventDefault();
+            const admin = getCurrentAdminSession();
+            if (!admin) return;
+
+            const input = document.getElementById('admin-reply-' + ticketId);
+            const replyText = input ? input.value.trim() : '';
+            if (!replyText) return;
+
+            const tickets = initTicketsDatabase();
+            const target = tickets.find(t => t.id === ticketId);
+            if (!target) return;
+
+            target.messages = target.messages || [];
+            target.messages.push({
+                sender: 'admin',
+                senderName: `${admin.name} (${admin.role})`,
+                text: replyText,
+                time: formatPersianDateFromISO(new Date().toISOString())
+            });
+            target.status = 'answered';
+
+            saveTicketsDB(tickets);
+            input.value = '';
+            renderAdminDashboard();
+            showToast('پاسخ ثبت شد', 'پاسخ شما در گفتگوی تیکت ' + target.trackingCode + ' ثبت گردید.');
+        }
+
+        function closeTicketByAdmin(ticketId) {
+            const admin = getCurrentAdminSession();
+            if (!admin) return;
+
+            const tickets = initTicketsDatabase();
+            const target = tickets.find(t => t.id === ticketId);
+            if (!target) return;
+
+            target.status = 'closed';
+            saveTicketsDB(tickets);
+            renderAdminDashboard();
+            showToast('تیکت بسته شد', 'وضعیت تیکت ' + target.trackingCode + ' به بسته شده تغییر یافت.');
+        }
+
+        // ==================== EVENT REGISTRATIONS & ADMIN APPROVAL ====================
+        function getStoredEventRegistrations() {
+            try {
+                const raw = JSON.parse(localStorage.getItem('nsu_event_registrations'));
+                if (!Array.isArray(raw)) return [];
+                return raw.map(item => ({
+                    ...item,
+                    approvalStatus: item.approvalStatus || 'pending'
+                }));
+            } catch (err) {
+                console.error('Error reading event registrations:', err);
+                return [];
+            }
+        }
+
+        function saveStoredEventRegistrations(list) {
+            try {
+                localStorage.setItem('nsu_event_registrations', JSON.stringify(list));
+            } catch (err) {
+                console.error('Error saving event registrations:', err);
+            }
+        }
+
+        let currentLookupStudentId = '';
+        let currentAdminRegFilter = 'all';
+
+        function getRegistrationStatusBadgeHTML(status) {
+            if (status === 'approved') {
+                return `<span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-3 py-1 rounded-full inline-flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> تایید و ثبت‌نام نهایی شده</span>`;
+            }
+            if (status === 'rejected') {
+                return `<span class="bg-red-100 text-red-800 text-[11px] font-bold px-3 py-1 rounded-full inline-flex items-center gap-1"><i class="fa-solid fa-circle-xmark"></i> رد شده</span>`;
+            }
+            return `<span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-3 py-1 rounded-full inline-flex items-center gap-1"><i class="fa-solid fa-clock"></i> در انتظار تایید مسئول / دبیر</span>`;
+        }
+
+        function handleLookupEventRegistration() {
+            const input = document.getElementById('lookup-reg-student-id');
+            const studentId = input ? input.value.trim() : '';
+            if (!studentId) {
+                showToast('وارد کردن کد دانشجویی الزامی است', 'لطفاً کد دانشجویی خود را برای استعلام ثبت‌نام وارد کنید.', false);
+                return;
+            }
+            currentLookupStudentId = studentId;
+            renderEventRegistrationsList(studentId);
+        }
+
+        function resetEventRegistrationLookup() {
+            currentLookupStudentId = '';
+            const input = document.getElementById('lookup-reg-student-id');
+            if (input) input.value = '';
+            renderEventRegistrationsList('');
+        }
+
+        function renderEventRegistrationsList(filterStudentId = currentLookupStudentId) {
+            const listContainer = document.getElementById('event-registrations-list');
+            const badge = document.getElementById('event-reg-count-badge');
+            if (!listContainer || !badge) return;
+
+            const allRegs = getStoredEventRegistrations();
+            const displayedRegs = filterStudentId
+                ? allRegs.filter(item => String(item.studentId).trim() === String(filterStudentId).trim())
+                : allRegs;
+
+            badge.textContent = displayedRegs.length + ' مورد';
+
+            if (displayedRegs.length === 0) {
+                const emptyMsg = filterStudentId
+                    ? `هیچ درخواست ثبت‌نامی برای کد دانشجویی «${filterStudentId}» یافت نشد.`
+                    : 'هنوز در مسابقه‌ای درخواست ثبت‌نام ثبت نکرده‌اید.';
+                listContainer.innerHTML = `<p class="text-slate-400 text-center py-4">${emptyMsg}</p>`;
+                return;
+            }
+
+            const headerSummary = filterStudentId ? `
+                <div class="bg-teal-50 border border-teal-200 text-teal-900 rounded-2xl p-3 mb-2 flex items-center justify-between text-xs font-bold">
+                    <span>نتیجه استعلام برای کد دانشجویی: ${filterStudentId}</span>
+                    <span>${displayedRegs.length} درخواست</span>
+                </div>
+            ` : '';
+
+            listContainer.innerHTML = headerSummary + displayedRegs.map(item => {
+                const statusBadge = getRegistrationStatusBadgeHTML(item.approvalStatus);
+                const reviewNote = item.reviewedBy
+                    ? `<span class="block text-[11px] text-slate-500 mt-1"><i class="fa-solid fa-user-check text-brand-turquoise ml-1"></i> بررسی‌شده توسط: ${item.reviewedBy} (${item.reviewedAt || ''})</span>`
+                    : '';
+
+                return `
+                    <div class="bg-white border border-slate-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="font-bold text-slate-900 text-sm">${item.eventName}</span>
+                                ${statusBadge}
+                            </div>
+                            <span class="text-slate-600 block mt-1">نام: <strong>${item.fullName}</strong> | کد دانشجویی: <strong>${item.studentId}</strong> | رشته: <strong>${item.major}</strong></span>
+                            <span class="block text-[11px] text-slate-400 mt-0.5">تماس: ${item.phone} | تاریخ درخواست: ${item.registeredAt}</span>
+                            ${reviewNote}
+                        </div>
+                        <button type="button" onclick="cancelEventRegistration('${item.id}')" class="text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-xl text-xs font-bold transition self-end sm:self-center">
+                            لغو درخواست
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function cancelEventRegistration(regId) {
+            const updated = getStoredEventRegistrations().filter(r => r.id !== regId);
+            saveStoredEventRegistrations(updated);
+            renderEventRegistrationsList(currentLookupStudentId);
+            renderAdminEventRegistrations();
+            showToast('ثبت‌نام لغو شد', 'درخواست ثبت‌نام حذف گردید.');
+        }
+
+        function handleEventRegister(e) {
+            e.preventDefault();
+            const titleEl = document.getElementById('modal-event-title');
+            const rawTitle = titleEl.getAttribute('data-event-name') || titleEl.textContent.replace('ثبت‌نام در:', '').trim();
+            const fullName = document.getElementById('reg-fullname').value.trim();
+            const studentId = document.getElementById('reg-student-id').value.trim();
+            const major = document.getElementById('reg-major').value;
+            const phone = document.getElementById('reg-phone').value.trim();
+
+            if (!major) {
+                showToast('انتخاب رشته الزامی است', 'لطفاً رشته تحصیلی خود را از لیست انتخاب کنید.', false);
+                return;
+            }
+
+            const regs = getStoredEventRegistrations();
+            const alreadyRegistered = regs.some(
+                r => r.eventName === rawTitle && String(r.studentId).trim() === studentId
+            );
+            if (alreadyRegistered) {
+                showToast('درخواست تکراری', 'شما قبلاً با این شماره دانشجویی برای «' + rawTitle + '» درخواست ثبت‌نام داده‌اید.', false);
+                return;
+            }
+
+            regs.unshift({
+                id: 'REG-' + Date.now(),
+                eventName: rawTitle,
+                fullName,
+                studentId,
+                major,
+                phone,
+                approvalStatus: 'pending',
+                reviewedBy: null,
+                reviewedAt: null,
+                registeredAt: new Date().toLocaleDateString('fa-IR')
+            });
+            saveStoredEventRegistrations(regs);
+            currentLookupStudentId = studentId;
+            const lookupInput = document.getElementById('lookup-reg-student-id');
+            if (lookupInput) lookupInput.value = studentId;
+            renderEventRegistrationsList(studentId);
+            renderAdminEventRegistrations();
+
+            e.target.reset();
+            closeModal('event-modal');
+            showToast('درخواست ارسال شد', 'درخواست شما برای دبیر انجمن و مسئول ثبت‌نام ارسال شد تا تایید نهایی انجام شود.');
+        }
+
+        function syncAdminRegFilterButtonsUI(filterKey) {
+            document.querySelectorAll('.admin-reg-filter-btn').forEach(btn => {
+                const isSelected = btn.getAttribute('data-reg-filter') === filterKey;
+                if (isSelected) {
+                    btn.classList.remove('bg-slate-100', 'text-slate-700');
+                    btn.classList.add('bg-brand-navy', 'text-white');
+                } else {
+                    btn.classList.remove('bg-brand-navy', 'text-white');
+                    btn.classList.add('bg-slate-100', 'text-slate-700');
+                }
+            });
+        }
+
+        function filterAdminEventRegs(filterKey, btnEl = null) {
+            currentAdminRegFilter = filterKey;
+            syncAdminRegFilterButtonsUI(filterKey);
+            if (btnEl) btnEl.blur();
+            renderAdminEventRegistrations();
+        }
+
+        function updateEventRegistrationDecision(regId, decision) {
+            const admin = getCurrentAdminSession();
+            if (!admin || (!admin.isSecretary && !admin.canManageRegistrations)) {
+                showToast('عدم دسترسی', 'فقط دبیر انجمن و مسئول ثبت‌نام مجاز به تایید یا رد درخواست‌ها هستند.', false);
+                return;
+            }
+
+            const regs = getStoredEventRegistrations();
+            const target = regs.find(r => r.id === regId);
+            if (!target) return;
+
+            target.approvalStatus = decision;
+            target.reviewedBy = `${admin.name} (${admin.role})`;
+            target.reviewedAt = new Date().toLocaleDateString('fa-IR');
+
+            saveStoredEventRegistrations(regs);
+            renderAdminEventRegistrations();
+            renderEventRegistrationsList(currentLookupStudentId);
+
+            if (decision === 'approved') {
+                showToast('ثبت‌نام تایید شد', `ثبت‌نام ${target.fullName} در «${target.eventName}» تایید نهایی شد.`);
+            } else {
+                showToast('درخواست رد شد', `درخواست ثبت‌نام ${target.fullName} رد شد.`, false);
+            }
+        }
+
+        function renderAdminEventRegistrations() {
+            const container = document.getElementById('admin-event-registrations-container');
+            if (!container) return;
+
+            const allRegs = getStoredEventRegistrations();
+
+            const countAllEl = document.getElementById('reg-count-all');
+            const countPendingEl = document.getElementById('reg-count-pending');
+            const countApprovedEl = document.getElementById('reg-count-approved');
+            const countRejectedEl = document.getElementById('reg-count-rejected');
+
+            if (countAllEl) countAllEl.textContent = allRegs.length;
+            if (countPendingEl) countPendingEl.textContent = allRegs.filter(r => r.approvalStatus === 'pending').length;
+            if (countApprovedEl) countApprovedEl.textContent = allRegs.filter(r => r.approvalStatus === 'approved').length;
+            if (countRejectedEl) countRejectedEl.textContent = allRegs.filter(r => r.approvalStatus === 'rejected').length;
+
+            const filtered = allRegs.filter(r => {
+                if (currentAdminRegFilter === 'all') return true;
+                return r.approvalStatus === currentAdminRegFilter;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-400 text-xs py-6">هیچ درخواست ثبت‌نامی در این وضعیت وجود ندارد.</p>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => {
+                const statusBadge = getRegistrationStatusBadgeHTML(item.approvalStatus);
+                const reviewInfo = item.reviewedBy
+                    ? `<span class="block text-[11px] text-slate-500 mt-1">ثبت تصمیم توسط: ${item.reviewedBy} (${item.reviewedAt || ''})</span>`
+                    : '';
+
+                return `
+                    <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                        <div class="space-y-1 text-xs">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="font-bold text-slate-900 text-sm">${item.eventName}</span>
+                                ${statusBadge}
+                            </div>
+                            <div class="text-slate-700">
+                                <strong>دانشجو:</strong> ${item.fullName} |
+                                <strong>کد دانشجویی:</strong> <span class="font-mono font-bold">${item.studentId}</span> |
+                                <strong>رشته:</strong> ${item.major}
+                            </div>
+                            <div class="text-[11px] text-slate-500">
+                                <strong>شماره همراه:</strong> ${item.phone} | <strong>تاریخ درخواست:</strong> ${item.registeredAt}
+                            </div>
+                            ${reviewInfo}
+                        </div>
+
+                        <div class="flex items-center gap-2 flex-wrap justify-end">
+                            <button type="button" onclick="updateEventRegistrationDecision('${item.id}', 'approved')" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-check"></i>
+                                <span>تایید ثبت‌نام</span>
+                            </button>
+                            <button type="button" onclick="updateEventRegistrationDecision('${item.id}', 'rejected')" class="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-xmark"></i>
+                                <span>رد درخواست</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==================== INITIALIZATION ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            initTicketsDatabase();
+            updateAdminHeaderLabels();
+            renderEventRegistrationsList();
+            updateActiveDrawerNav('home');
+        });
+    </script>
+</body>
+</html>
